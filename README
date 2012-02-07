@@ -1,0 +1,15 @@
+Karaoke Flow
+Ben Turner
+
+Project for John Schimmel's Dynamic Web Development class.
+
+2nd week's homework assignment:
+
+As we start to move towards starting a web server and database we need to think about the visual
+front-end HTML. For next week,
+ -Create a simple form that will collect mulitple fields of data, these can include textboxes,
+  checkboxes, drop lists, etc.  Include a save or submit button on the form.
+ -Implement a 'click' event on the Save/Submit button that will use a piece of data from your
+  form. The 'click' event could use the alert() function or it could add dynamic HTML elements
+  to the web page.
+ -Save your HTML and JavaScript in a Git repository (directory).
