@@ -1,0 +1,81 @@
+<script type="text/javascript">
+
+var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
+
+
+var randomTopic1 = function() { return Math.floor(Math.random() * topics.length); };
+var randomTopic2 = function() { return Math.floor(Math.random() * topics.length); };
+
+</script>
+
+<CENTER>
+
+<TABLE BORDER=0 CELLPADDING=10><TR><TD VALIGN="middle"><H2>Step #1: Create da Rhymes</H2></TD><TD VALIGN="middle"><BUTTON CLASS="help" ID="help">?</BUTTON></TD></TR></TABLE><BR />
+
+<TABLE ID="tablePrompts"><TR><TD VALIGN="middle">
+<SPAN CLASS="rhymePrompts">TOPIC 1:</SPAN><BR />
+<SPAN ID="rhymeTopic" CLASS="rhymeAnswers"><SCRIPT TYPE="text/javascript">document.write(topics[randomTopic1()]);</SCRIPT></SPAN>
+</TD><TD VALIGN="middle">+</TD><TD VALIGN="middle">
+<SPAN CLASS="rhymePrompts">TOPIC 2:</SPAN><BR />
+<SPAN ID="rhymeTarget" CLASS="rhymeAnswers"><SCRIPT TYPE="text/javascript">document.write(topics[randomTopic2()]);</SCRIPT></SPAN>
+</TD></TR></TABLE>
+
+<BR />
+
+<TABLE BORDER=0><TR><TD>
+<FORM ID="createRhymes" NAME="createRhymes" ACTION="/create" METHOD="post">
+
+line 1:<BR />
+<TEXTAREA NAME="rhyme[]" ID="rhyme0" ROWS=1 COLS=40></TEXTAREA>
+<BR />
+<DIV ID="dynamicInput">
+line 2:<BR />
+<TEXTAREA NAME="rhyme[]" ID="rhyme1" ROWS=1 COLS=40></TEXTAREA><BR />
+</DIV>
+
+<BUTTON onClick="addInput('dynamicInput');return false;" CLASS="help addLine">add another dope line</BUTTON>
+
+</TD></TR></TABLE>
+
+<BR />
+
+<INPUT TYPE="submit" ID="submitRhymes" VALUE="post yo' rhymes!" />
+
+</FORM>
+
+<DIV ID="dialog" STYLE="display: none;">
+ <P>
+Take the 2 topics and come up with some fresh rhymes! Rhyme 2-4 lines, not always end rhyme, but make it creative!
+ </P>
+
+ <P>
+Example from Drake's "Fancy": Jason had this girl Tammy with a purple Bentley / How she got it I ain't never get to ask / I just knew that she was fine like a ticket on the dash
+ </P>
+</DIV>
+
+<script type="text/javascript">
+
+/* via http://www.randomsnippets.com/2008/02/21/how-to-dynamically-add-form-elements-via-javascript/ */
+
+var counter = 3;
+var limit = 8;
+var addInput = function(divName){
+     if (counter > limit)  {
+          alert("You have reached the limit of adding " + counter + " inputs");
+     }
+     else {
+          var newdiv = document.createElement('div');
+          newdiv.innerHTML = "line " + counter + ":<BR />\n<TEXTAREA NAME=\"rhyme[]\" ID=\"rhyme" + counter + "\" ROWS=1 COLS=40></TEXTAREA><BR />";
+          document.getElementById(divName).appendChild(newdiv);
+          counter++;
+     }
+};
+
+$(function() {
+	$("#submitRhymes").button();
+	$("#help").button().click(function () {
+    	$("#dialog").dialog({ title: "instructions", width: 400 });
+	});
+});
+
+</script>

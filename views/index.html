@@ -1,0 +1,44 @@
+<CENTER>
+
+<TABLE BORDER=0 CELLPADDING=10><TR><TD VALIGN="middle"><H2>Welcome to Karaoke Flow</H2></TD></TR></TABLE><BR />
+
+<TABLE ID="bodyTable"><TR><TD VALIGN="top">
+
+<DIV ID="body"><CENTER>
+<TABLE BORDER=0 CELLPADDING=30><TR><TD VALIGN="bottom" ALIGN="right">
+<SPAN CLASS="newRoomName" TITLE="If you specify a name, other people can join your Karaoke Flow room on other clients!">unique room name (optional)<BR />
+<INPUT TYPE="text" ID="flowNewRoomName" NAME="flowNewRoomName"></SPAN></TD><TD>
+<BUTTON ID="newFlowButton">new karaoke flow!</BUTTON>
+</TD></TR>
+<TR><TD ALIGN="right"><SPAN CLASS="newRoomName" TITLE="Has someone else already made a Karaoke Flow that you want to join?">...or specify existing room name (optional)<BR />
+<INPUT TYPE="text" ID="flowRoomName" NAME="flowRoomName"></SPAN></TD><TD><BUTTON ID="joinFlowButton">join existing karaoke flow!</BUTTON></TD></TR></TABLE>
+</CENTER></DIV>
+
+</TD></TR></TABLE>
+
+<script type="text/javascript">
+
+$(function() {
+	$("#submitRhymes").button().click(function() {
+		window.location = '/perform/';
+		return false;
+	});
+	$("#newFlowButton").button().click(function() {
+		window.location = '/create/';
+		return false;
+	});
+	$("#joinFlowButton").button().click(function() {
+		window.location = '/create/';
+		return false;
+	});
+	$("#help").button({
+        icons: {
+            primary: "ui-icon-help"
+        },
+        text: false
+    }).click(function () {
+    	$("#dialog").dialog({ title: "instructions", width: 400 });
+	});
+});
+
+</script>

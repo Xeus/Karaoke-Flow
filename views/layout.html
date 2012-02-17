@@ -1,0 +1,58 @@
+<HTML>
+
+<HEAD>
+<TITLE><% if (typeof pageTitle != "undefined") { %>
+           <%= pageTitle %>
+        <% } else { %>
+            Karaoke Flow
+        <% } %></TITLE>
+<link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
+<STYLE TYPE="text/css">
+	.rhymePrompts { font-size: 16pt; font-weight: bold; }
+	*, INPUT[type="submit"] { font-family: 'Permanent Marker', cursive; }
+	BODY { margin: 0px; background: #F96B2D; }
+	INPUT[type="text"], TEXTAREA { font-size: 18pt; border: 1px solid #000000; background: #F99461; padding: 6px;}
+	#tablePrompts { text-align: center; background: #28F348; color: #6D249E; border-style: dotted; border-width: 3px; border-color: #F96B2D; }
+	#tablePrompts TD { padding: 20px; font-size: 20pt; }
+	.rhymeAnswers { color: black; }
+	#header { border-bottom-width: 3px; border-bottom-style: dotted; border-bottom-color: #F96B2D; }
+	#footer { border-top-width: 3px; border-top-style: dotted; border-top-color: #F96B2D; }
+	.headfoot { background: #28F348; text-align: center; color: #6D249E; margin: 0px; }
+	#karaokeFlow { font-size: 60pt; align: center; letter-spacing: -3px; }
+	H2 { font-size: 30pt; display: inline;}
+	#submitRhymes { background: #28F348; color: #6D249E; font-size: 30pt; }
+	#submitRhymes:hover { background: white; color: black; }
+	.help { color: gray !important; border-size: 0pt !important; background: white !important; font-size: 10pt; }
+	.addLine { border-color: white !important; border-size: 0pt !important; }
+	#help { font-size: 10pt; vertical-align: middle;}
+	.help:hover { color: black; border-color: black !important; }
+	BUTTON, INPUT[type="submit"] { vertical-align: text-top; background: #4DE0E2 !important; color: #000000 !important; border-color: black; border-size: 1pt; border-style: solid; }
+	BUTTON:hover, INPUT[type="submit"]:hover { background: white !important; color: black !important; }
+	#dialog { font-size: 12pt; font-family: Arial;}
+	#lyrics { color: white; font-size: 20pt; text-align: justify; font-family: Arial; }
+	#lyricsTable { margin-left: auto; margin-right: auto; }
+	#flowRoomName { font-size: 20pt;}
+</STYLE>
+<link type="text/css" href="/css/pepper-grinder/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.8.17.custom.min.js"></script>
+</HEAD>
+
+<BODY BGCOLOR="#F96B2D">
+
+<DIV CLASS="headfoot" ID="header">
+<DIV ID="karaokeFlow">Karaoke Flow</DIV>
+</DIV>
+
+<%- body %>
+
+<BR /><BR />
+
+<DIV CLASS="headfoot" ID="footer"><BR />
+Karaoke Flow :: [ <A HREF="/about/">about</A> | <A HREF="http://benturner.com/contact_me.php">contact</A> ]
+<BR /><BR />
+</DIV>
+
+</BODY>
+
+</HTML>
