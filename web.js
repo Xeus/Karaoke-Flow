@@ -38,7 +38,10 @@ app.configure(function() {
 });
 /*********** END SERVER CONFIGURATION *****************/
 
-var flowArray = []; // this array will hold card data from forms
+/* Gonna have to add console.log() msgs to track the parameters,
+ * namely the countdown clock. */
+
+var flowArray = []; // holds each submitted flow event
 var flowNumber, flowData;
 
 app.get('/', function(request, response) {
@@ -48,12 +51,19 @@ app.get('/', function(request, response) {
     response.render("index.html", templateData);
 });
 
+/* I think this'll need some work. Create a counter once someone
+ * starts making rhymes, but it'll need an event ID so others can
+ * access it immediately. */
+
 app.get('/create', function(request, response) {
     var templateData = {
         pageTitle : "Step #1: Create da Rhymes :: Karaoke Flow"
     };
     response.render("create.html", templateData);
 });
+
+
+
 
 app.post('/create', function(request, response) {
     console.log("Inside app.post('/')");
@@ -74,6 +84,9 @@ app.post('/create', function(request, response) {
 
     response.redirect("/perform/" + flowNumber);
 });
+
+
+
 
 app.get('/perform/:flowNumber', function(request, response) {
     flowNumber = request.params.flowNumber;
@@ -96,49 +109,6 @@ app.get('/perform/:flowNumber', function(request, response) {
 
 });
 
-/*
-app.post('/', function(request, response){
-    console.log("Inside app.post('/')");
-    console.log("form received and includes")
-    console.log(request.body);
-    
-    // Simple data object to hold the form data
-    newCard = {
-        to : request.body.to,
-        from : request.body.from,
-        message : request.body.message,
-        image : request.body.image
-    };
-    
-    // Put this newCard object into the cardArray
-    cardArray.push(newCard);
-    
-    // Get the position of the card in the cardArray
-    cardNumber = cardArray.length - 1;
-    
-    response.redirect('/card/' + cardNumber);
-});
-
-
-app.get('/card/:cardNumber', function(request, response){
-    
-    // Get the card from cardArray
-    cardData = cardArray[request.params.cardNumber]
-    
-    if (cardData != undefined) {
-        
-        // Render the card_display template - pass in the cardData
-        response.render("card_display.html", cardData);
-        
-    } else {
-        // card not found. show the 'Card not found' template
-        response.render("card_not_found.html");
-        
-    }
-    
-});
-*/
-
 
 
 
@@ -147,3 +117,5 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
+
