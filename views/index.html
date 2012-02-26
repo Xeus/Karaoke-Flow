@@ -6,12 +6,12 @@
 
 <DIV ID="body"><CENTER>
 <TABLE BORDER=0 CELLPADDING=30><TR><TD VALIGN="bottom" ALIGN="right">
-<SPAN CLASS="newRoomName" TITLE="If you specify a name, other people can join your Karaoke Flow room on other clients!">unique room name (optional)<BR />
-<INPUT TYPE="text" ID="flowNewRoomName" NAME="flowNewRoomName"></SPAN></TD><TD>
-<BUTTON ID="newFlowButton">new karaoke flow!</BUTTON>
+<SPAN CLASS="newFlowName" TITLE="If you specify a name, other people can join your Karaoke Flow on other clients!">unique flow name (optional)<BR />
+<FORM NAME="newFlowForm"><INPUT TYPE="text" ID="newFlowName" NAME="newFlowName"></SPAN></TD><TD>
+<BUTTON ID="newFlowButton">new karaoke flow!</BUTTON></FORM>
 </TD></TR>
-<TR><TD ALIGN="right"><SPAN CLASS="newRoomName" TITLE="Has someone else already made a Karaoke Flow that you want to join?">...or specify existing room name<BR />
-<INPUT TYPE="text" ID="flowRoomName" NAME="flowRoomName"></SPAN></TD><TD><BUTTON ID="joinFlowButton">join existing karaoke flow!</BUTTON></TD></TR></TABLE>
+<TR><TD ALIGN="right"><SPAN CLASS="newFlowName" TITLE="Has someone else already made a Karaoke Flow that you want to join?">...or specify existing room name<BR />
+<FORM NAME="newFlowForm"><INPUT TYPE="text" ID="flowName" NAME="flowName"></SPAN></TD><TD><BUTTON ID="joinFlowButton">join existing karaoke flow!</BUTTON></FORM></TD></TR></TABLE>
 </CENTER></DIV>
 
 </TD></TR></TABLE>
@@ -19,16 +19,12 @@
 <script type="text/javascript">
 
 $(function() {
-	$("#submitRhymes").button().click(function() {
-		window.location = '/perform/';
-		return false;
-	});
 	$("#newFlowButton").button().click(function() {
-		window.location = '/create/';
+		window.location = '/create';
 		return false;
 	});
 	$("#joinFlowButton").button().click(function() {
-		window.location = '/create/';
+		window.location = '/create';
 		return false;
 	});
 	$("#help").button({

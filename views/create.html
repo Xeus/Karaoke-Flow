@@ -1,29 +1,21 @@
-<script type="text/javascript">
-
-var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
-
-
-var randomTopic1 = function() { return Math.floor(Math.random() * topics.length); };
-var randomTopic2 = function() { return Math.floor(Math.random() * topics.length); };
-
-</script>
-
 <CENTER>
 
 <TABLE BORDER=0 CELLPADDING=10><TR><TD VALIGN="middle"><H2>Step #1: Create da Rhymes</H2></TD><TD VALIGN="middle"><BUTTON CLASS="help" ID="help">?</BUTTON></TD></TR></TABLE><BR />
 
 <TABLE ID="tablePrompts"><TR><TD VALIGN="middle">
 <SPAN CLASS="rhymePrompts">TOPIC 1:</SPAN><BR />
-<SPAN ID="rhymeTopic" CLASS="rhymeAnswers"><SCRIPT TYPE="text/javascript">document.write(topics[randomTopic1()]);</SCRIPT></SPAN>
+<SPAN ID="rhymeTopic" CLASS="rhymeAnswers"><%= randomTopic1 %></SPAN>
 </TD><TD VALIGN="middle">+</TD><TD VALIGN="middle">
 <SPAN CLASS="rhymePrompts">TOPIC 2:</SPAN><BR />
-<SPAN ID="rhymeTarget" CLASS="rhymeAnswers"><SCRIPT TYPE="text/javascript">document.write(topics[randomTopic2()]);</SCRIPT></SPAN>
+<SPAN ID="rhymeTarget" CLASS="rhymeAnswers"><%= randomTopic2 %></SPAN>
 </TD></TR></TABLE>
 
 <BR />
 
 <TABLE BORDER=0><TR><TD>
 <FORM ID="createRhymes" NAME="createRhymes" ACTION="/create" METHOD="post">
+<INPUT TYPE="hidden" NAME="topic1" VALUE="<%= randomTopic1 %>" />
+<INPUT TYPE="hidden" NAME="topic2" VALUE="<%= randomTopic2 %>" />
 
 line 1:<BR />
 <TEXTAREA NAME="rhyme[]" ID="rhyme0" ROWS=1 COLS=40></TEXTAREA>
@@ -57,7 +49,7 @@ Example from Drake's "Fancy": Jason had this girl Tammy with a purple Bentley / 
 
 /* via http://www.randomsnippets.com/2008/02/21/how-to-dynamically-add-form-elements-via-javascript/ */
 
-var counter = 3;
+var counter = 2;
 var limit = 8;
 var addInput = function(divName){
      if (counter > limit)  {
