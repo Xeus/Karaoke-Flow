@@ -15,7 +15,7 @@ module.exports.configureSchema = function(Schema, mongoose) {
 
 	var FlowStat = new Schema({
 		flowStatsID : Number,
-		flowCount : { type: Number, default: 0 }
+		flowCount : Number
 	});
 
 	// add schemas to Mongoose

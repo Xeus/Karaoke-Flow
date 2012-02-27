@@ -83,7 +83,7 @@ app.post('/createnew', function(request, response) {
         flowCount = 0;
     }*/
 
-    var flowCountRecord = FlowStat.findOne({flowStatsID: 0});
+    var flowCountRecord = FlowStat.findOne({flowStatsID : 0});
     console.log("results of flowCountRecord: " + flowCountRecord + ", flowCount -> " + flowCountRecord.flowCount);
 
     if (flowCountRecord.flowCount == null) {
