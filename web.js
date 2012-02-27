@@ -40,6 +40,8 @@ app.get('/', function(request, response) {
 });
 
 
+
+
 /* I think this'll need some work. Create a counter once someone
  * starts making rhymes, but it'll need an event ID so others can
  * access it immediately. */
@@ -67,6 +69,9 @@ app.get('/create', function(request, response) {
     response.redirect("/create/" + flowID); // send to general /create page
 });
 
+
+
+
 app.post('/create/new', function(request, response) {
     console.log("Inside app.post('/create')");
     console.log("form received and includes:")
@@ -78,7 +83,7 @@ app.post('/create/new', function(request, response) {
         flowCount = 0;
     }*/
 
-    var flowCountRecord = FlowStat.findOne({flowStatsID: '0'});
+    var flowCountRecord = FlowStat.findOne({flowStatsID: 0});
     console.log("results of flowCountRecord: " + flowCountRecord);
 
     if (flowCountRecord.flowCount == null) {
@@ -87,9 +92,9 @@ app.post('/create/new', function(request, response) {
             flowStatsID : 0,
             flowCount : 0
         }
-        var newFlowStats = new FlowStat(flowStatsData);
-        newFlowStats.save;
-        console.log("saved to FlowStats: " + flowStatsData);
+        var newFlowStat = new FlowStat(flowStatsData);
+        newFlowStat.save;
+        console.log("saved to FlowStat: " + flowStatsData);
     }
     else {
         console.log("found count");
@@ -103,7 +108,7 @@ app.post('/create/new', function(request, response) {
     var newFlow = new Flow(flowData);
     newFlow.save();
 
-    FlowStat.update( { flowStatsID:"0" }, { $inc: { flowCount : 1 } } );
+    FlowStat.update( { flowStatsID:0 }, { $inc: { flowCount : 1 } } );
     FlowStat.save;
 
     response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
@@ -147,6 +152,9 @@ app.post('/create/new', function(request, response) {
     });*/
 
 });
+
+
+
 
 
 app.post('/create', function(request, response) {
