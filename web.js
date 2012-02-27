@@ -89,10 +89,11 @@ app.post('/createnew', function(request, response) {
     if (flowCountRecord.flowCount == null) {
         console.log("flowCount null");
         var flowStatsData = {
-            flowStatsID : 0
+            flowStatsID : 0,
+            flowCount : 0
         };
         var newFlowStat = new FlowStat(flowStatsData);
-        newFlowStat.save;
+        newFlowStat.save();
         console.log("saved to FlowStat: " + flowStatsData);
     }
     else {
@@ -108,7 +109,7 @@ app.post('/createnew', function(request, response) {
     newFlow.save();
 
     FlowStat.update( { flowStatsID:0 }, { $inc: { flowCount : 1 } } );
-    FlowStat.save;
+    FlowStat.save();
 
     response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
 
