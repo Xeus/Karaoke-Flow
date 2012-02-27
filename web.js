@@ -52,11 +52,12 @@ app.get('/create', function(request, response) {
     console.log(flowCount);
     
     var randRoomNum = Math.floor(Math.random()*10000);
+    var randRoomName = "room" + randRoomNum;
 
     // prepare new flow with the form data
     var flowData = {
         flowID : flowCount,
-        name : "room" + randRoomNum;
+        name : randRoomName
     };
     
     var newFlow = new Flow(flowData);
