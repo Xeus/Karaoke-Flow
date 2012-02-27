@@ -78,8 +78,8 @@ app.post('/createnew', function(request, response) {
     console.log(request.body);
 
     FlowStat.findOne({ flowStatsID : 0 }, function(err, flowCountRecord) {
-
-        if (flowCountRecord == null) {
+        if (err) { console.log(err); }
+        if (flowCountRecord.flowCount == null) {
             console.log("flowCount null");
             var flowStatsData = {
                 flowStatsID : 0,
@@ -91,21 +91,17 @@ app.post('/createnew', function(request, response) {
         }
         else {
             console.log("found count");
-            var flowStatsData = {
-                flowStatsID : 0,
-                flowCount : flowCountRecord.flowCount
-            };
         }
 
         var flowData = {
-            flowID : flowStatsData.flowCount,
+            flowID : flowCountRecord.flowCount,
             name : request.body.newFlowName
         };
     
         var newFlow = new Flow(flowData);
         newFlow.save();
 
-        FlowStat.update( { flowStatsID:0 }, { $inc: { flowCount : 1 } } );
+        FlowStat.update( { flowStatsID : 0 }, { $inc: { flowCount : 1 } } );
 
         response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
     });
