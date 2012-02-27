@@ -78,11 +78,44 @@ app.post('/create/new', function(request, response) {
         flowCount = 0;
     }*/
 
-    FlowStats.findOne({flowStatsID:'0'},function(err,found){
+    var flowCountRecord = FlowStats.findOne({flowStatsID: '0'});
+    console.log("results of flowCountRecord: " + flowCountRecord);
+
+    if (flowCountRecord.flowCount == null) {
+        console.log("flowCount null");
+        var flowStatsData = {
+            flowStatsID : 0,
+            flowCount : 0
+        }
+    }
+    else {
+        console.log("found count");
+        var flowCount = found.flowCount - 1;
+        var flowStatsData = {
+            flowStatsID : 0,
+            flowCount : flowCount
+        }
+    }
+
+    var flowData = {
+        flowID : flowCount,
+        name : request.body.newFlowName
+    };
+    
+    var newFlow = new Flow(flowData);
+    newFlow.save();
+
+    FlowStats.update( { flowStatsID:"0" }, { $inc: { flowCount : 1 } } );
+    FlowStats.save;
+
+    response.redirect("/create/id/" + flowData.flowID); // send to specific ID'd /create page
+
+    /*FlowStats.findOne({flowStatsID:'0'},function(err,found){
         if (err) {
             console.log("error finding count");
         }
         else if (found.flowCount = null) {
+            console.log("no count yet");
             var flowStatsData = {
                 flowStatsID : 0,
                 flowCount : 0
@@ -113,7 +146,7 @@ app.post('/create/new', function(request, response) {
     response.redirect("/create/id/" + flowData.flowID); // send to specific ID'd /create page
 
 
-    });
+    });*/
 
 });
 
