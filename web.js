@@ -89,8 +89,7 @@ app.post('/createnew', function(request, response) {
     if (flowCountRecord.flowCount == null) {
         console.log("flowCount null");
         var flowStatsData = {
-            flowStatsID : 0,
-            flowCount : 0
+            flowStatsID : 0
         };
         var newFlowStat = new FlowStat(flowStatsData);
         newFlowStat.save;
