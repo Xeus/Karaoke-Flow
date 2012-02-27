@@ -74,7 +74,7 @@ app.post('/create/new', function(request, response) {
     var flowCount = Flow.count(); // count starts at 0
     console.log("flow count is " + flowCount);
     if (isNaN(flowCount)) {
-        flowID = 0;
+        flowCount = 0;
     }
         
     // prepare new flow with the form data
