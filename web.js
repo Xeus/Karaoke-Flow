@@ -46,7 +46,7 @@ app.get('/', function(request, response) {
  * starts making rhymes, but it'll need an event ID so others can
  * access it immediately. */
 
- // make default id
+ // make default id / fix flow count
 
 app.get('/create', function(request, response) {
     console.log("Inside app.get('/create')");
@@ -72,8 +72,8 @@ app.get('/create', function(request, response) {
 
 
 
-app.post('/create/new', function(request, response) {
-    console.log("Inside app.post('/create')");
+app.post('/createnew', function(request, response) {
+    console.log("Inside app.post('/createnew')");
     console.log("form received and includes:")
     console.log(request.body);
 
