@@ -91,7 +91,7 @@ app.post('/create/new', function(request, response) {
         var flowStatsData = {
             flowStatsID : 0,
             flowCount : 0
-        }
+        };
         var newFlowStat = new FlowStat(flowStatsData);
         newFlowStat.save;
         console.log("saved to FlowStat: " + flowStatsData);
