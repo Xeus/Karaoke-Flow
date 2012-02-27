@@ -176,8 +176,8 @@ app.get('/create/id/:flowID', function(request, response) {
 
     var templateData = {
         pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
-        randomTopic1 : randomTopic1,
-        randomTopic2 : randomTopic2
+        randomTopic1 : topics[randomTopic1],
+        randomTopic2 : topics[randomTopic2]
     };
 
     response.render("create.html", templateData);
