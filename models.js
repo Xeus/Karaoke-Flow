@@ -14,10 +14,12 @@ module.exports.configureSchema = function(Schema, mongoose) {
 	});
 
 	var FlowStats = new Schema({
+		flowStatsID : Number,
 		flowCount : { type: Number, default: 0 }
 	});
 
 	// add schemas to Mongoose
 	mongoose.model('Flow', Flow);
 	mongoose.model('Rhyme', Rhyme);	
+	mongoose.model('FlowStats', FlowStats);
 };
