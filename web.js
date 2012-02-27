@@ -46,18 +46,24 @@ app.get('/', function(request, response) {
  // make default id
 
 app.get('/create', function(request, response) {
-    var templateData = {
-        pageTitle : "Step #1: Find a Flow Room :: Karaoke Flow"
+    console.log("Inside app.get('/create')");
+
+    var flowCount = Flow.count(); // count starts at 0
+    console.log(flowCount);
+    
+    var randRoomNum = Math.floor(Math.random()*10000);
+
+    // prepare new flow with the form data
+    var flowData = {
+        flowID : flowCount,
+        name : "room" + randRoomNum;
     };
-    var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
+    
+    var newFlow = new Flow(flowData);
+    newFlow.save();
 
-    var randomTopic1 = function() { return Math.floor(Math.random() * topics.length); };
-    var randomTopic2 = function() { return Math.floor(Math.random() * topics.length); };
-
-    response.render("create.html", templateData);
+    response.redirect("/create/id/" + flowID); // send to general /create page
 });
-
-
 
 app.post('/create/new', function(request, response) {
     console.log("Inside app.post('/create')");
@@ -162,7 +168,7 @@ var flowCount = Flow.count(); // count starts at 0
     
     newFlow.save();
 
-    response.redirect("/perform/" + flowID);
+    response.render("create.html", templateData);
     }
         });
 
