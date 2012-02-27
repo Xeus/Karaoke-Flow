@@ -80,6 +80,9 @@ app.post('/create/new', function(request, response) {
 
     FlowStats.findOne({flowStatsID:'0'},function(err,found){
         if (err) {
+            console.log("error finding count");
+        }
+        else if (found.flowCount = null) {
             var flowStatsData = {
                 flowStatsID : 0,
                 flowCount : 0
@@ -87,6 +90,7 @@ app.post('/create/new', function(request, response) {
             var newflowStats = new FlowStats(flowStatsData);
         }
         else {
+            console.log("found count");
             var flowCount = found.flowCount - 1;
             var flowStatsData = {
                 flowStatsID : 0,

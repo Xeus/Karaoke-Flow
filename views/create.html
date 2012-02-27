@@ -31,7 +31,7 @@ line 2:<BR />
 
 <BR />
 
-<INPUT TYPE="submit" ID="submitRhymes" VALUE="post yo' rhymes!" />
+<INPUT NAME="submitRhymes" TYPE="submit" ID="submitRhymes" VALUE="post yo' rhymes!" />
 
 </FORM>
 
@@ -66,9 +66,11 @@ var addInput = function(divName){
 };
 
 $(function() {
-	$("#submitRhymes").button();
+	$("#submitRhymes").button().click(function(
+          $("#createRhymes").submit();
+     });
 	$("#help").button().click(function () {
-    	$("#dialog").dialog({ title: "instructions", width: 400 });
+    	     $("#dialog").dialog({ title: "instructions", width: 400 });
 	});
 });
 
