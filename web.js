@@ -86,7 +86,7 @@ app.post('/create/new', function(request, response) {
     var newFlow = new Flow(flowData);
     newFlow.save();
 
-    response.redirect("/create/id/" + flowID); // send to general /create page
+    response.redirect("/create/id/" + flowCount); // send to general /create page
 });
 
 
