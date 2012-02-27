@@ -84,7 +84,7 @@ app.post('/createnew', function(request, response) {
     }*/
 
     var flowCountRecord = FlowStat.findOne({flowStatsID: 0});
-    console.log("results of flowCountRecord: " + flowCountRecord);
+    console.log("results of flowCountRecord: " + flowCountRecord + ", flowCount -> " + flowCountRecord.flowCount);
 
     if (flowCountRecord.flowCount == null) {
         console.log("flowCount null");
