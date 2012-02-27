@@ -43,9 +43,11 @@ app.get('/', function(request, response) {
  * starts making rhymes, but it'll need an event ID so others can
  * access it immediately. */
 
+ // make default id
+
 app.get('/create', function(request, response) {
     var templateData = {
-        pageTitle : "Step #1: Create da Rhymes :: Karaoke Flow"
+        pageTitle : "Step #1: Find a Flow Room :: Karaoke Flow"
     };
     var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
 
@@ -114,6 +116,14 @@ app.post('/create/id/:flowID', function(request, response) {
     flowArray.push(newFlow);
     flowNumber = flowArray.length - 1;
     */
+
+    var templateData = {
+        pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow"
+    };
+    var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
+
+    var randomTopic1 = function() { return Math.floor(Math.random() * topics.length); };
+    var randomTopic2 = function() { return Math.floor(Math.random() * topics.length); };
 
     Flow.findOne({name:request.params.flowName}, function(err,flow) {
 
