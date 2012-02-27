@@ -146,6 +146,9 @@ app.get('/create/id/:flowID', function(request, response) {
 
 var flowCount = Flow.count(); // count starts at 0
     console.log(flowCount);
+    if (isNaN(flowCount)) {
+        flowCount = 0;
+    }
     
     // Prepare, save and redirect
 
