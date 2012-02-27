@@ -132,8 +132,8 @@ app.get('/create/id/:flowID', function(request, response) {
     };
     var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
 
-    var randomTopic1 = function() { return Math.floor(Math.random() * topics.length); };
-    var randomTopic2 = function() { return Math.floor(Math.random() * topics.length); };
+    randomTopic1 = function() { return Math.floor(Math.random() * topics.length); };
+    randomTopic2 = function() { return Math.floor(Math.random() * topics.length); };
 
     Flow.findOne({name:request.params.flowName}, function(err,flow) {
 
@@ -144,7 +144,7 @@ app.get('/create/id/:flowID', function(request, response) {
         }
         else {
 
-var flowCount = Flow.count(); // count starts at 0
+    var flowCount = Flow.count(); // count starts at 0
     console.log(flowCount);
     if (isNaN(flowCount)) {
         flowCount = 0;
@@ -176,8 +176,8 @@ var flowCount = Flow.count(); // count starts at 0
     newFlow.save();
 
     response.render("create.html", templateData);
-    }
-        });
+        }
+    });
 
 });
 
