@@ -21,5 +21,5 @@ module.exports.configureSchema = function(Schema, mongoose) {
 	// add schemas to Mongoose
 	mongoose.model('Flow', Flow);
 	mongoose.model('Rhyme', Rhyme);	
-	mongoose.model('FlowStat', FlowStats);
+	mongoose.model('FlowStat', FlowStat);
 };
