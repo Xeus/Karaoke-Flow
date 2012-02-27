@@ -87,6 +87,8 @@ app.post('/create/new', function(request, response) {
             flowStatsID : 0,
             flowCount : 0
         }
+        var newFlowStats = new FlowStats(flowStatsData);
+        newFlowStats.save;
     }
     else {
         console.log("found count");
