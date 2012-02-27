@@ -101,7 +101,7 @@ app.post('/createnew', function(request, response) {
         var newFlow = new Flow(flowData);
         newFlow.save();
 
-        FlowStat.update( { flowStatsID : 0 }, { $inc: { flowCount : 1 } } );
+        FlowStat.find({ flowStatsID : 0 }).update( { $inc: { flowCount : 1 } } );
 
         response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
     });
