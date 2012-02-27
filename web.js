@@ -77,78 +77,35 @@ app.post('/createnew', function(request, response) {
     console.log("form received and includes:")
     console.log(request.body);
 
-    /*var flowCount = Flow.count(); // count starts at 0
-    console.log("flow count is " + flowCount);
-    if (isNaN(flowCount)) {
-        flowCount = 0;
-    }*/
+    FlowStat.findOne({ flowStatsID : 0 }, function(err, flowCountRecord) {
+        console.log("results of flowCountRecord: " + flowCountRecord + ", flowCount -> " + flowCountRecord.flowCount);
 
-    var flowCountRecord = FlowStat.findOne({ "flowStatsID" : 0 });
-    console.log("results of flowCountRecord: " + flowCountRecord + ", flowCount -> " + flowCountRecord.flowCount);
-
-    if (flowCountRecord.flowCount == null) {
-        console.log("flowCount null");
-        var flowStatsData = {
-            flowStatsID : 0,
-            flowCount : 0
-        };
-        var newFlowStat = new FlowStat(flowStatsData);
-        newFlowStat.save();
-        console.log("saved to FlowStat: " + flowStatsData);
-    }
-    else {
-        console.log("found count");
-    }
-
-    var flowData = {
-        flowID : flowStatsData.flowCount,
-        name : request.body.newFlowName
-    };
-    
-    var newFlow = new Flow(flowData);
-    newFlow.save();
-
-    FlowStat.update( { flowStatsID:0 }, { $inc: { flowCount : 1 } } );
-
-    response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
-
-    /*FlowStats.findOne({flowStatsID:'0'},function(err,found){
         if (err) {
-            console.log("error finding count");
-        }
-        else if (found.flowCount = null) {
-            console.log("no count yet");
+            console.log("flowCount null");
             var flowStatsData = {
                 flowStatsID : 0,
                 flowCount : 0
-            }
-            var newflowStats = new FlowStats(flowStatsData);
+            };
+            var newFlowStat = new FlowStat(flowStatsData);
+            newFlowStat.save();
+            console.log("saved to FlowStat: " + flowStatsData);
         }
         else {
             console.log("found count");
-            var flowCount = found.flowCount - 1;
-            var flowStatsData = {
-                flowStatsID : 0,
-                flowCount : flowCount
-            }
         }
 
-        // prepare new flow with the form data
-    var flowData = {
-        flowID : flowCount,
-        name : request.body.newFlowName
-    };
+        var flowData = {
+            flowID : flowStatsData.flowCount,
+            name : request.body.newFlowName
+        };
     
-    var newFlow = new Flow(flowData);
-    newFlow.save();
+        var newFlow = new Flow(flowData);
+        newFlow.save();
 
-    FlowStats.update( { flowStatsID:"0" }, { $inc: { flowCount : 1 } } );
-    FlowStats.save;
+        FlowStat.update( { flowStatsID:0 }, { $inc: { flowCount : 1 } } );
 
-    response.redirect("/create/id/" + flowData.flowID); // send to specific ID'd /create page
-
-
-    });*/
+        response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
+    });
 
 });
 
