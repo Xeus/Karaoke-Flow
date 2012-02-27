@@ -91,10 +91,14 @@ app.post('/createnew', function(request, response) {
         }
         else {
             console.log("found count");
+            var flowStatsData = {
+                flowStatsID : 0,
+                flowCount : flowCountRecord.flowCount
+            };
         }
 
         var flowData = {
-            flowID : flowCountRecord.flowCount,
+            flowID : flowStatsData.flowCount,
             name : request.body.newFlowName
         };
     
