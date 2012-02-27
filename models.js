@@ -13,7 +13,7 @@ module.exports.configureSchema = function(Schema, mongoose) {
  		date : { type: Date, default: Date.now }
 	});
 
-	var FlowStats = new Schema({
+	var FlowStat = new Schema({
 		flowStatsID : Number,
 		flowCount : { type: Number, default: 0 }
 	});
@@ -21,5 +21,5 @@ module.exports.configureSchema = function(Schema, mongoose) {
 	// add schemas to Mongoose
 	mongoose.model('Flow', Flow);
 	mongoose.model('Rhyme', Rhyme);	
-	mongoose.model('FlowStats', FlowStats);
+	mongoose.model('FlowStat', FlowStats);
 };

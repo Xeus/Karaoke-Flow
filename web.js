@@ -24,7 +24,7 @@ require('./models').configureSchema(schema, mongoose);
 
 var Flow = mongoose.model('Flow');
 var Rhyme = mongoose.model('Rhyme');
-var FlowStats = mongoose.model('FlowStats');
+var FlowStat = mongoose.model('FlowStat');
 
 
 
@@ -64,7 +64,7 @@ app.get('/create', function(request, response) {
     var newFlow = new Flow(flowData);
     newFlow.save();
 
-    response.redirect("/create/id/" + flowID); // send to general /create page
+    response.redirect("/create/" + flowID); // send to general /create page
 });
 
 app.post('/create/new', function(request, response) {
@@ -78,7 +78,7 @@ app.post('/create/new', function(request, response) {
         flowCount = 0;
     }*/
 
-    var flowCountRecord = FlowStats.findOne({flowStatsID: '0'});
+    var flowCountRecord = FlowStat.findOne({flowStatsID: '0'});
     console.log("results of flowCountRecord: " + flowCountRecord);
 
     if (flowCountRecord.flowCount == null) {
@@ -87,7 +87,7 @@ app.post('/create/new', function(request, response) {
             flowStatsID : 0,
             flowCount : 0
         }
-        var newFlowStats = new FlowStats(flowStatsData);
+        var newFlowStats = new FlowStat(flowStatsData);
         newFlowStats.save;
         console.log("saved to FlowStats: " + flowStatsData);
     }
@@ -103,10 +103,10 @@ app.post('/create/new', function(request, response) {
     var newFlow = new Flow(flowData);
     newFlow.save();
 
-    FlowStats.update( { flowStatsID:"0" }, { $inc: { flowCount : 1 } } );
-    FlowStats.save;
+    FlowStat.update( { flowStatsID:"0" }, { $inc: { flowCount : 1 } } );
+    FlowStat.save;
 
-    response.redirect("/create/id/" + flowData.flowID); // send to specific ID'd /create page
+    response.redirect("/create/" + flowData.flowID); // send to specific ID'd /create page
 
     /*FlowStats.findOne({flowStatsID:'0'},function(err,found){
         if (err) {
@@ -163,14 +163,14 @@ app.post('/create', function(request, response) {
         }
         else {
             // have to do checking for multiple rooms w/ same name
-            response.redirect("/create/id/" + flow.flowID); // send to general /create page
+            response.redirect("/create/" + flow.flowID); // send to general /create page
         }
     });
 });
 
 
 
-app.get('/create/id/:flowID', function(request, response) {
+app.get('/create/:flowID', function(request, response) {
     console.log("Inside app.post('/create/id')");
     console.log("form received and includes:")
     console.log(request.body);
