@@ -18,10 +18,10 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema; 
 
 /************ DATABASE CONFIGURATION **********/
+// Am also using foreman start/kf aliases to run locally.
+
 app.db = mongoose.connect(process.env.MONGOLAB_URI); // requires .env file
-
 require('./models').configureSchema(schema, mongoose);
-
 var Flow = mongoose.model('Flow');
 var Rhyme = mongoose.model('Rhyme');
 var FlowStat = mongoose.model('FlowStat');
@@ -42,11 +42,8 @@ app.get('/', function(request, response) {
 
 
 
-/* I think this'll need some work. Create a counter once someone
- * starts making rhymes, but it'll need an event ID so others can
- * access it immediately. */
-
  // make default id / fix flow count
+ // count() won't work
 
 app.get('/create', function(request, response) {
     console.log("Inside app.get('/create')");
@@ -54,7 +51,7 @@ app.get('/create', function(request, response) {
     var flowCount = Flow.count(); // count starts at 0
     console.log(flowCount);
     
-    var randRoomNum = Math.floor(Math.random()*10000);
+    var randRoomNum = Math.floor(Math.random()*10000); // makes somewhat random room name
     var randRoomName = "room" + randRoomNum;
 
     // prepare new flow with the form data
@@ -74,6 +71,7 @@ app.get('/create', function(request, response) {
 /* some weird thing where it does /create/0 twice, but flowCount
  * is correct in the FlowStat schema */
 
+// creates new room
 app.post('/createnew', function(request, response) {
     console.log("Inside app.post('/createnew')");
     console.log("form received and includes:")
@@ -85,7 +83,8 @@ app.post('/createnew', function(request, response) {
             console.log("flowCount null");
             var flowStatsData = {
                 flowStatsID : 0,
-                flowCount : 0
+                flowCount : 0,
+                rhymeCount : 0
             };
             var newFlowStat = new FlowStat(flowStatsData);
             newFlowStat.save();
@@ -101,7 +100,8 @@ app.post('/createnew', function(request, response) {
 
         var flowData = {
             flowID : flowStatsData.flowCount,
-            name : request.body.newFlowName
+            name : request.body.newFlowName,
+            active : true
         };
     
         var newFlow = new Flow(flowData);
@@ -117,18 +117,18 @@ app.post('/createnew', function(request, response) {
 
 
 
-
+// check if room actually exists?  redirects?
 app.post('/create', function(request, response) {
     console.log("Inside app.post('/create')");
     console.log("form received and includes:")
     console.log(request.body);
    
-    Flow.findOne({name:request.params.flowName}, function(err,flow) {
+    Flow.findOne({ name : request.params.flowName, active : true }, function(err,flow) {
 
         if (err) {
             console.log('Error');
             console.log(err);
-            response.send("Uh oh, can't find that flow!");
+            response.send("Uh oh, can't find an active flow by that name.");
         }
         else {
             // have to do checking for multiple rooms w/ same name
@@ -139,8 +139,61 @@ app.post('/create', function(request, response) {
 
 
 
+// app.post exists too
 app.get('/create/:flowID', function(request, response) {
-    console.log("Inside app.post('/create/id')");
+    console.log("Inside app.post('/create/:flowID')");
+    console.log("form received and includes:")
+    console.log(request.body);
+    
+    /*
+    var newFlow = {
+        rhyme : request.body.rhyme,
+        startTime : Date.now()
+    };
+    //console.log(newFlow.startTime);
+    
+    flowArray.push(newFlow);
+    flowNumber = flowArray.length - 1;
+    */
+
+    var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
+
+    // returns number reference, use with array topics to get actual string result
+    getRandomTopic = function() { return Math.floor(Math.random() * topics.length); };
+    var randomTopicNum1 = getRandomTopic();
+    var randomTopicNum2 = getRandomTopic();
+
+    Flow.findOne({ flowID : request.params.flowID }, function(err,flow) {
+
+        if (err) {
+            console.log('Error');
+            console.log(err);
+            response.send("Uh oh, can't find that flow!");
+        }
+        else {
+
+            var endTime = flow.date.valueOf() + 300;
+            console.log(endTime);
+            var currentTime = new Date();
+            var timeRemaining = endTime - currentTime.valueOf();
+            var templateData = {
+                pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
+                randomTopic1 : topics[randomTopicNum1],
+                randomTopic2 : topics[randomTopicNum2],
+                flow : flow,
+                timeRemaining : timeRemaining
+            };
+
+            response.render("create.html", templateData);
+        }
+    });
+
+});
+
+
+// app.get exists too
+app.post('/create/:flowID', function(request, response) {
+    console.log("Inside app.post('/create/:flowID')");
     console.log("form received and includes:")
     console.log(request.body);
     
@@ -161,55 +214,43 @@ app.get('/create/:flowID', function(request, response) {
     var randomTopicNum1 = getRandomTopic();
     var randomTopicNum2 = getRandomTopic();
 
-
-    Flow.findOne({name:request.params.flowName}, function(err,flow) {
+    Flow.findOne({ flowID : request.params.flowID }, function(err,flow) {
 
         if (err) {
             console.log('Error');
             console.log(err);
             response.send("Uh oh, can't find that flow!");
-        }
+        } // /end if error
         else {
 
-    var flowCount = Flow.count(); // count starts at 0
-    console.log(flowCount);
-    if (isNaN(flowCount)) {
-        flowCount = 0;
-    }
-    
-    // Prepare, save and redirect
+            var rhymeData = {
+                body : request.body.rhyme,
+                flowID : request.params.flowID,
+                topic1 : request.body.topic1,
+                topic2 : request.body.topic2
+            };
 
-    var rhymeData = {
-        body : request.body.rhyme,
-        flowID : flowCount
-    };
-
-    //console.log(newFlow.startTime);
-
-    var newRhyme = new Rhyme(rhymeData);
-    newRhyme.save;
+            var newRhyme = new Rhyme(rhymeData);
+            newRhyme.save();
         
-    // prepare new flow with the form data
-    var flowData = {
-        flowID : flowCount,
-        name : request.body.topic1,
-        text : request.body.topic2,
-        compiledFlow : request.body.rhyme
-    };
-        
-    // create new comment
-    var newFlow = new Flow(flowData);
-    
-    newFlow.save();
+            var flowData = {
+                topic1 : request.body.topic1,
+                topic2 : request.body.topic2,
+                compiledFlow : request.body.rhyme
+            };
 
-    var templateData = {
-        pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
-        randomTopic1 : topics[randomTopicNum1],
-        randomTopic2 : topics[randomTopicNum2]
-    };
+            FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : 1 } } );
+            Flow.findOne({ flowID : request.params.flowID }).update(flowData);
 
-    response.render("create.html", templateData);
-        }
+            var templateData = {
+                pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
+                randomTopic1 : request.body.topic1,
+                randomTopic2 : request.body.topic2,
+                flow : flow
+            };
+
+            response.render("create.html", templateData);
+        } // /end if no error
     });
 
 });
@@ -217,13 +258,13 @@ app.get('/create/:flowID', function(request, response) {
 
 
 
-app.get('/perform/:flowNumber', function(request, response) {
+app.get('/perform/:flowID', function(request, response) {
 
     var templateData = {
         pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow"
     };
 
-    Flow.findOne({flowID:request.params.flowNumber}, function(err,flow) {
+    Flow.findOne({ flowID : request.params.flowID }, function(err,flow) {
 
         if (err) {
             console.log('Error');
@@ -232,7 +273,7 @@ app.get('/perform/:flowNumber', function(request, response) {
         }
 
         // Render the perform template - pass in the flowData.
-        response.render("perform.html", flowData);
+        response.render("perform.html", flow);
 
     });
 

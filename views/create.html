@@ -1,19 +1,22 @@
 <CENTER>
 
-<TABLE BORDER=0 CELLPADDING=10><TR><TD VALIGN="middle"><H2>Step #1: Create da Rhymes</H2></TD><TD VALIGN="middle"><BUTTON CLASS="help" ID="help">?</BUTTON></TD></TR></TABLE><BR />
+<TABLE BORDER=0 CELLPADDING=10><TR><TD VALIGN="middle"><H2>Step #1: Create da Rhymes</H2></TD><TD VALIGN="middle"><BUTTON CLASS="help" ID="help">?</BUTTON></TD></TR></TABLE>
 
-<TABLE ID="tablePrompts"><TR><TD VALIGN="middle">
+<TABLE ID="tablePrompts" BORDER=0>
+<TR><TD VALIGN="middle">
 <SPAN CLASS="rhymePrompts">TOPIC 1:</SPAN><BR />
 <SPAN ID="rhymeTopic" CLASS="rhymeAnswers"><%= randomTopic1 %></SPAN>
 </TD><TD VALIGN="middle">+</TD><TD VALIGN="middle">
 <SPAN CLASS="rhymePrompts">TOPIC 2:</SPAN><BR />
 <SPAN ID="rhymeTarget" CLASS="rhymeAnswers"><%= randomTopic2 %></SPAN>
-</TD></TR></TABLE>
+</TD></TR>
+<TR><TD COLSPAN=3 ALIGN="left" STYLE="padding: 0px; padding-bottom: 15px; padding-left: 40px;"><SPAN STYLE="display: inline;" ID="javascript_countdown_time"></SPAN></TD></TR>
+</TABLE>
 
 <BR />
 
 <TABLE BORDER=0><TR><TD>
-<FORM ID="createRhymes" NAME="createRhymes" ACTION="/create" METHOD="post">
+<FORM ID="createRhymes" NAME="createRhymes" ACTION="/create/<%= flow.flowID %>" METHOD="post">
 <INPUT TYPE="hidden" NAME="topic1" VALUE="<%= randomTopic1 %>" />
 <INPUT TYPE="hidden" NAME="topic2" VALUE="<%= randomTopic2 %>" />
 
@@ -45,9 +48,15 @@ Example from Drake's "Fancy": Jason had this girl Tammy with a purple Bentley / 
  </P>
 </DIV>
 
+<script type="text/javascript" SRC="/js/countdown.js"></script>
+
 <script type="text/javascript">
 
-/* via http://www.randomsnippets.com/2008/02/21/how-to-dynamically-add-form-elements-via-javascript/ */
+// time to countdown in seconds, and element ID
+// via http://stuntsnippets.com/javascript-countdown/
+javascript_countdown.init(<%= timeRemaining %>, 'javascript_countdown_time');
+
+// via http://www.randomsnippets.com/2008/02/21/how-to-dynamically-add-form-elements-via-javascript/
 
 var counter = 2;
 var counterShow = counter + 1;
