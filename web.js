@@ -127,9 +127,6 @@ app.get('/create/id/:flowID', function(request, response) {
     flowNumber = flowArray.length - 1;
     */
 
-    var templateData = {
-        pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow"
-    };
     var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
 
     getRandomTopic = function() { return Math.floor(Math.random() * topics.length); };
@@ -176,6 +173,12 @@ app.get('/create/id/:flowID', function(request, response) {
     var newFlow = new Flow(flowData);
     
     newFlow.save();
+
+    var templateData = {
+        pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
+        randomTopic1 : randomTopic1,
+        randomTopic2 : randomTopic2
+    };
 
     response.render("create.html", templateData);
         }
