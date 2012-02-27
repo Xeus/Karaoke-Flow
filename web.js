@@ -89,18 +89,14 @@ app.post('/create/new', function(request, response) {
         }
         var newFlowStats = new FlowStats(flowStatsData);
         newFlowStats.save;
+        console.log("saved to FlowStats: " + flowStatsData);
     }
     else {
         console.log("found count");
-        var flowCount = found.flowCount - 1;
-        var flowStatsData = {
-            flowStatsID : 0,
-            flowCount : flowCount
-        }
     }
 
     var flowData = {
-        flowID : flowCount,
+        flowID : flowStatsData.flowCount,
         name : request.body.newFlowName
     };
     
