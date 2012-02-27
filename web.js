@@ -72,7 +72,7 @@ app.post('/create/new', function(request, response) {
     console.log(request.body);
 
     var flowCount = Flow.count(); // count starts at 0
-    console.log(flowCount);
+    console.log("flow count is " + flowCount);
         
     // prepare new flow with the form data
     var flowData = {
