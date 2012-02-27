@@ -86,7 +86,7 @@ app.post('/create/new', function(request, response) {
     var newFlow = new Flow(flowData);
     newFlow.save();
 
-    response.redirect("/create/id/" + flowCount); // send to general /create page
+    response.redirect("/create/id/" + flowData.flowID); // send to specific ID'd /create page
 });
 
 
@@ -111,7 +111,7 @@ app.post('/create', function(request, response) {
 
 
 
-app.post('/create/id/:flowID', function(request, response) {
+app.get('/create/id/:flowID', function(request, response) {
     console.log("Inside app.post('/create/id')");
     console.log("form received and includes:")
     console.log(request.body);
