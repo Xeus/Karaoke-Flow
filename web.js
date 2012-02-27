@@ -71,6 +71,8 @@ app.get('/create', function(request, response) {
 
 
 
+/* some weird thing where it does /create/0 twice, but flowCount
+ * is correct in the FlowStat schema */
 
 app.post('/createnew', function(request, response) {
     console.log("Inside app.post('/createnew')");
