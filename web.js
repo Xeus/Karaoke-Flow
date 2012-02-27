@@ -24,6 +24,7 @@ require('./models').configureSchema(schema, mongoose);
 
 var Flow = mongoose.model('Flow');
 var Rhyme = mongoose.model('Rhyme');
+var FlowStats = mongoose.model('FlowStats');
 
 
 
@@ -71,13 +72,29 @@ app.post('/create/new', function(request, response) {
     console.log("form received and includes:")
     console.log(request.body);
 
-    var flowCount = Flow.count(); // count starts at 0
+    /*var flowCount = Flow.count(); // count starts at 0
     console.log("flow count is " + flowCount);
     if (isNaN(flowCount)) {
         flowCount = 0;
-    }
-        
-    // prepare new flow with the form data
+    }*/
+
+    FlowStats.findOne({flowStatsID:'0'},function(err,found){
+        if (err) {
+            var flowStatsData = {
+                flowStatsID : 0,
+                flowCount : 0
+            }
+            var newflowStats = new FlowStats(flowStatsData);
+        }
+        else {
+            var flowCount = found.flowCount - 1;
+            var flowStatsData = {
+                flowStatsID : 0,
+                flowCount : flowCount
+            }
+        }
+
+        // prepare new flow with the form data
     var flowData = {
         flowID : flowCount,
         name : request.body.newFlowName
@@ -86,7 +103,14 @@ app.post('/create/new', function(request, response) {
     var newFlow = new Flow(flowData);
     newFlow.save();
 
+    FlowStats.update( { flowStatsID:"0" }, { $inc: { flowCount : 1 } } );
+    FlowStats.save;
+
     response.redirect("/create/id/" + flowData.flowID); // send to specific ID'd /create page
+
+
+    });
+
 });
 
 
@@ -130,8 +154,8 @@ app.get('/create/id/:flowID', function(request, response) {
     var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
 
     getRandomTopic = function() { return Math.floor(Math.random() * topics.length); };
-    var randomTopic1 = getRandomTopic();
-    var randomTopic2 = getRandomTopic();
+    var randomTopicNum1 = getRandomTopic();
+    var randomTopicNum2 = getRandomTopic();
 
 
     Flow.findOne({name:request.params.flowName}, function(err,flow) {
@@ -176,8 +200,8 @@ app.get('/create/id/:flowID', function(request, response) {
 
     var templateData = {
         pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
-        randomTopic1 : topics[randomTopic1],
-        randomTopic2 : topics[randomTopic2]
+        randomTopic1 : topics[randomTopicNum1],
+        randomTopic2 : topics[randomTopicNum2]
     };
 
     response.render("create.html", templateData);

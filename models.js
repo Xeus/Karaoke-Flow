@@ -11,7 +11,11 @@ module.exports.configureSchema = function(Schema, mongoose) {
 		topic2 : String,
 		compiledFlow : String,
  		date : { type: Date, default: Date.now }
-	}); 
+	});
+
+	var FlowStats = new Schema({
+		flowCount : { type: Number, default: 0 }
+	});
 
 	// add schemas to Mongoose
 	mongoose.model('Flow', Flow);

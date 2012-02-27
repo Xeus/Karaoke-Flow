@@ -50,6 +50,7 @@ Example from Drake's "Fancy": Jason had this girl Tammy with a purple Bentley / 
 /* via http://www.randomsnippets.com/2008/02/21/how-to-dynamically-add-form-elements-via-javascript/ */
 
 var counter = 2;
+var counterShow = counter + 1;
 var limit = 8;
 var addInput = function(divName){
      if (counter > limit)  {
@@ -57,9 +58,10 @@ var addInput = function(divName){
      }
      else {
           var newdiv = document.createElement('div');
-          newdiv.innerHTML = "line " + counter + ":<BR />\n<TEXTAREA NAME=\"rhyme[]\" ID=\"rhyme" + counter + "\" ROWS=1 COLS=40></TEXTAREA><BR />";
+          newdiv.innerHTML = "line " + counterShow + ":<BR />\n<TEXTAREA NAME=\"rhyme[]\" ID=\"rhyme" + counter + "\" ROWS=1 COLS=40></TEXTAREA><BR />";
           document.getElementById(divName).appendChild(newdiv);
           counter++;
+          counterShow++;
      }
 };
 
