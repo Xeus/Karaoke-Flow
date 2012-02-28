@@ -41,6 +41,7 @@ var javascript_countdown = function () {
  
 	function no_time_left() {
 		document.getElementById(output_element_id).innerHTML = no_time_left_message;
+		document.getElementById("submitRhymes").value = "Time's up. Send what you got.";
 	}
  
 	return {

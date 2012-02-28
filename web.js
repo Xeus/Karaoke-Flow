@@ -264,10 +264,6 @@ app.post('/create/:flowID', function(request, response) {
 
 app.get('/perform/:flowID', function(request, response) {
 
-    var templateData = {
-        pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow"
-    };
-
     Flow.findOne({ flowID : request.params.flowID }, function(err,flow) {
 
         if (err) {
@@ -275,6 +271,8 @@ app.get('/perform/:flowID', function(request, response) {
             console.log(err);
             response.send("Uh oh, can't find that flow!");
         }
+
+        flow.pageTitle = "Step #2: Perform da Rhymes :: Karaoke Flow";
 
         // Render the perform template - pass in the flowData.
         response.render("perform.html", flow);

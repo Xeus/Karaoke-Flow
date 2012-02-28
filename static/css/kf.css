@@ -19,8 +19,16 @@
 	#help { font-size: 10pt; vertical-align: middle;}
 	.help:hover { color: black; border-color: black !important; }
 	BUTTON, INPUT[type="submit"] { vertical-align: text-top; background: #4DE0E2 !important; color: #000000 !important; border-color: black; border-size: 1pt; border-style: solid; }
+	.glow { -webkit-animation-name: bluePulse; -webkit-animation-duration: 2s; -webkit-animation-iteration-count: infinite; }
 	BUTTON:hover, INPUT[type="submit"]:hover { background: white !important; color: black !important; }
 	#dialog { font-size: 12pt; font-family: Arial;}
 	#lyrics { color: white; font-size: 20pt; text-align: justify; font-family: Arial; }
 	#lyricsTable { margin-left: auto; margin-right: auto; }
 	#flowName { font-size: 20pt;}
+
+	/* from http://www.zurb.com/playground/radioactive-buttons */
+	@-webkit-keyframes bluePulse {
+		from { background-color: #80e0f0; -webkit-box-shadow:: 0 0 20px #F96B2D !important; }
+		50% { background-color: #40a0e0; -webkit-box-shadow:: 0 0 40px #40a0e0 !important; }
+		to { background-color: #80e0f0; -webkit-box-shadow:: 0 0 20px #F96B2D !important; }
+	}
