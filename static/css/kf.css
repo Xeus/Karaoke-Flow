@@ -1,6 +1,7 @@
 	.rhymePrompts { font-size: 16pt; font-weight: bold; }
 	*, INPUT[type="submit"] { font-family: 'Permanent Marker', cursive; }
 	BODY { margin: 0px; background: #F96B2D; }
+	A { color: black; }
 	INPUT[type="text"], TEXTAREA { font-size: 18pt; border: 1px solid #000000; background: #F99461; padding: 6px;}
 	#tablePrompts { text-align: center; background: #28F348; color: #6D249E; border-style: dotted; border-width: 3px; border-color: #F96B2D; }
 	#tablePrompts TD { padding: 20px; font-size: 20pt; }
@@ -10,7 +11,8 @@
 	.headfoot { background: #28F348; text-align: center; color: #6D249E; margin: 0px; }
 	#karaokeFlow { font-size: 60pt; align: center; letter-spacing: -3px; }
 	H2 { font-size: 30pt; display: inline;}
-	#submitRhymes { background: #28F348; color: #6D249E; font-size: 30pt; }
+	#javascript_countdown_time { color: #6D249E; }
+	#submitRhymes { font-size: 30pt; }
 	#submitRhymes:hover { background: white; color: black; }
 	.help { color: gray !important; border-size: 0pt !important; background: white !important; font-size: 10pt; }
 	.addLine { border-color: white !important; border-size: 0pt !important; }

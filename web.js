@@ -284,6 +284,14 @@ app.get('/perform/:flowID', function(request, response) {
 });
 
 
+app.get('/about', function(request, response) {
+    var templateData = {
+        pageTitle : "What's All This About?"
+    };
+
+    response.render("about.html", templateData);
+});
+
 
 
 // Make server turn on and listen at defined PORT (or port 3000 if is not defined).
