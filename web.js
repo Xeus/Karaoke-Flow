@@ -172,10 +172,14 @@ app.get('/create/:flowID', function(request, response) {
         }
         else {
 
-            var endTime = flow.date.valueOf() + 300;
-            console.log(endTime);
+            // timer set to 5 minutes from create date (* 60 seconds * 1000 milliseconds)
+            var minutes = 5;
+            var endTime = flow.date.valueOf() + 60 * minutes * 1000;
+            console.log("endTime: " + endTime);
+            console.log("flow.date: " + flow.date.valueOf());
             var currentTime = new Date();
-            var timeRemaining = endTime - currentTime.valueOf();
+            console.log("currentTime: " + currentTime.valueOf());
+            var timeRemaining = Math.floor((endTime - currentTime.valueOf()) / 1000);
             var templateData = {
                 pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
                 randomTopic1 : topics[randomTopicNum1],

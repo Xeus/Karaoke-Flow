@@ -32,7 +32,7 @@ var javascript_countdown = function () {
 		minutes = add_leading_zero( minutes );
 		hours = add_leading_zero( hours );
  
-		return 'Remaining: ' + hours + ':' + minutes + ':' + seconds;
+		return 'Remaining: ' + minutes + ':' + seconds;
 	}
  
 	function show_time_left() {
