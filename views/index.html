@@ -33,6 +33,8 @@ $(function() {
     }).click(function () {
     	$("#dialog").dialog({ title: "instructions", width: 400 });
 	});
+	var flowList = [<% for (var i=0;i<activeFlowNames.length;i++) { %>"<%= activeFlowNames[i] %>",<% } %>];
+	$("#flowName").autocomplete({ source: flowList });
 });
 
 </script>

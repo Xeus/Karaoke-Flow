@@ -1,5 +1,7 @@
 // via http://stuntsnippets.com/javascript-countdown/
 
+var noTimeLeftBoolean = false;
+
 var javascript_countdown = function () {
 	var time_left = 10; //number of seconds for countdown
 	var output_element_id = 'javascript_countdown_time';
@@ -42,6 +44,7 @@ var javascript_countdown = function () {
 	function no_time_left() {
 		document.getElementById(output_element_id).innerHTML = no_time_left_message;
 		document.getElementById("submitRhymes").value = "Time's up. Send what you got.";
+		noTimeLeftBoolean = true;
 	}
  
 	return {

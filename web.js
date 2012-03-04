@@ -33,10 +33,24 @@ var FlowStat = mongoose.model('FlowStat');
  * namely the countdown clock. */
 
 app.get('/', function(request, response) {
-    var templateData = {
-        pageTitle : "Karaoke Flow"
-    };
-    response.render("index.html", templateData);
+
+    var flowNames = [];
+
+    Flow.find({ active : true }, ["name"], function(err, activeFlowNames) {
+        if (err) { console.log(err); }
+        console.log(activeFlowNames.length);
+
+        for (var i=0;i<activeFlowNames.length;i++) {
+            flowNames.push(activeFlowNames[i].name);
+        }
+
+        var templateData = {
+            pageTitle : "Karaoke Flow",
+            activeFlowNames : flowNames
+        };
+    
+        response.render("index.html", templateData);
+    });
 });
 
 
@@ -65,6 +79,8 @@ app.get('/create', function(request, response) {
 
     response.redirect("/create/" + flowID); // send to general /create page
 });
+
+
 
 
 
@@ -123,7 +139,7 @@ app.post('/create', function(request, response) {
     console.log("form received and includes:")
     console.log(request.body);
    
-    Flow.findOne({ name : request.params.flowName, active : true }, function(err,flow) {
+    Flow.findOne({ name : request.body.flowName, active : true }, function(err,flow) {
 
         if (err) {
             console.log('Error');
@@ -131,8 +147,17 @@ app.post('/create', function(request, response) {
             response.send("Uh oh, can't find an active flow by that name.");
         }
         else {
-            // have to do checking for multiple rooms w/ same name
-            response.redirect("/create/" + flow.flowID); // send to general /create page
+            console.log(flow);
+            if (flow == null) {
+                var templateData = {
+                    pageTitle : "Karaoke Flow"
+                };
+                response.send("Flow not found. :(");
+            }
+            else {
+                // have to do checking for multiple rooms w/ same name
+                response.redirect("/create/" + flow.flowID); // send to general /create page
+            }
         }
     });
 });
@@ -188,7 +213,12 @@ app.get('/create/:flowID', function(request, response) {
                 timeRemaining : timeRemaining
             };
 
-            response.render("create.html", templateData);
+            if (timeRemaining <= 1) {
+                response.redirect("/perform/" + flow.flowID);
+            }
+            else {
+                response.render("create.html", templateData);
+            }
         }
     });
 
@@ -227,6 +257,15 @@ app.post('/create/:flowID', function(request, response) {
         } // /end if error
         else {
 
+            // timer set to 5 minutes from create date (* 60 seconds * 1000 milliseconds)
+            var minutes = 5;
+            var endTime = flow.date.valueOf() + 60 * minutes * 1000;
+            console.log("endTime: " + endTime);
+            console.log("flow.date: " + flow.date.valueOf());
+            var currentTime = new Date();
+            console.log("currentTime: " + currentTime.valueOf());
+            var timeRemaining = Math.floor((endTime - currentTime.valueOf()) / 1000);
+
             var rhymeData = {
                 body : request.body.rhyme,
                 flowID : request.params.flowID,
@@ -239,21 +278,29 @@ app.post('/create/:flowID', function(request, response) {
         
             var flowData = {
                 topic1 : request.body.topic1,
-                topic2 : request.body.topic2,
-                compiledFlow : request.body.rhyme
+                topic2 : request.body.topic2
             };
 
+            rhymesTemp = request.body.rhyme;
+            rhymesJoined = rhymesTemp.join("|");
+
             FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : 1 } } );
-            Flow.findOne({ flowID : request.params.flowID }).update(flowData);
+            Flow.findOne({ flowID : request.params.flowID }).update({ $push : { compiledFlow : rhymesJoined } });
 
             var templateData = {
                 pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
                 randomTopic1 : request.body.topic1,
                 randomTopic2 : request.body.topic2,
-                flow : flow
+                flow : flow,
+                timeRemaining : timeRemaining
             };
 
-            response.render("create.html", templateData);
+            if (timeRemaining <= 0) {
+                response.redirect("/perform/" + flow.flowID);
+            }
+            else {
+                response.render("create.html", templateData);
+            }
         } // /end if no error
     });
 
@@ -271,15 +318,28 @@ app.get('/perform/:flowID', function(request, response) {
             console.log(err);
             response.send("Uh oh, can't find that flow!");
         }
+        else {
 
-        flow.pageTitle = "Step #2: Perform da Rhymes :: Karaoke Flow";
+            var rhymes = flow.compiledFlow;
+            if (rhymes == undefined || rhymes == null) {
+                rhymes = "[no rhymes entered]";
+            }
 
-        // Render the perform template - pass in the flowData.
-        response.render("perform.html", flow);
+            var flowData = {
+                flowName : flow.name,
+                pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow",
+                rhymes : rhymes
+            };
+
+            // Render the perform template - pass in the flowData.
+            response.render("perform.html", flowData);
+        }
 
     });
 
 });
+
+
 
 
 app.get('/about', function(request, response) {

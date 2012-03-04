@@ -14,7 +14,7 @@ module.exports.configureSchema = function(Schema, mongoose) {
 		topic2 : String,
 		compiledFlow : String,
  		date : { type: Date, default: Date.now },
- 		active : Boolean
+ 		active : Boolean 
 	});
 
 	var FlowStat = new Schema({
