@@ -1,6 +1,7 @@
 var express = require('express');
 var ejs = require('ejs'); // EJS (Embedded JavaScript) https://github.com/visionmedia/ejs
 var app = express.createServer(express.logger());
+var requestURL = require('request');
 
 /*********** SERVER CONFIGURATION *****************/
 app.configure(function() {
@@ -482,6 +483,31 @@ app.get("/stats", function(request, response) {
             admin : true
         };
         response.render('stats.html', templateData);
+    });
+});
+
+
+// JSON REST blahblah
+app.get('/rhymes/json', function(request, response){
+
+    // define the fields you want to include in your json data
+    includeFields = ['rhymeID','flowID','body','topic1','topic2','date']
+
+    // query for all blog
+    queryConditions = {}; //empty conditions - return everything
+    var query = Rhyme.find( queryConditions, includeFields);
+
+    query.sort('date',-1); //sort by most recent
+    query.exec(function (err, rhymes) {
+
+        // render the card_form template with the data above
+        jsonData = {
+          'status' : 'OK',
+          'JSONtitle' : 'All Karaoke Flow Rhymes',
+          'rhymes' : rhymes
+        }
+
+        response.json(jsonData);
     });
 });
 
