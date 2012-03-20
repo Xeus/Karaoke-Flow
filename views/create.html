@@ -21,21 +21,21 @@
 <INPUT TYPE="hidden" NAME="topic2" VALUE="<%= randomTopic2 %>" />
 
 line 1:<BR />
-<TEXTAREA NAME="rhyme[]" ID="rhyme0" ROWS=1 COLS=40></TEXTAREA>
+<TEXTAREA NAME="rhyme[]" ID="rhyme0" ROWS=1 COLS=40 CLASS="text ui-widget-content ui-corner-all"></TEXTAREA>
 <BR />
 <DIV ID="dynamicInput">
 line 2:<BR />
-<TEXTAREA NAME="rhyme[]" ID="rhyme1" ROWS=1 COLS=40></TEXTAREA><BR />
+<TEXTAREA NAME="rhyme[]" ID="rhyme1" ROWS=1 COLS=40 CLASS="text ui-widget-content ui-corner-all"></TEXTAREA><BR />
 </DIV>
 
-<BUTTON onClick="addInput('dynamicInput');return false;" CLASS="help addLine">add another dope line</BUTTON>
+<BUTTON onClick="addInput('dynamicInput');return false;" CLASS="help addLine text ui-widget-content ui-corner-all">add another dope line</BUTTON>
 
 </TD></TR></TABLE>
 
 <BR />
 
-<INPUT NAME="submitRhymes" TYPE="submit" ID="submitRhymes" VALUE="post yo' rhymes!" CLASS="glow" /><BR />
-<CENTER><FONT SIZE=1>[ <A HREF="/perform/<%= flow.flowID %>">skip to the end</A> ]</A></FONT></CENTER>
+<INPUT NAME="submitRhymes" TYPE="submit" ID="submitRhymes" VALUE="post yo' rhymes!" CLASS="glow" CLASS="text ui-widget-content ui-corner-all" /><BR />
+<CENTER><FONT SIZE=1>[ <A HREF="/perform/<%= flow.flowID %>">...or skip to the end</A> ]</A></FONT></CENTER>
 
 </FORM>
 
@@ -68,7 +68,7 @@ var addInput = function(divName){
      }
      else {
           var newdiv = document.createElement('div');
-          newdiv.innerHTML = "line " + counterShow + ":<BR />\n<TEXTAREA NAME=\"rhyme[]\" ID=\"rhyme" + counter + "\" ROWS=1 COLS=40></TEXTAREA><BR />";
+          newdiv.innerHTML = "line " + counterShow + ":<BR />\n<TEXTAREA NAME=\"rhyme[]\" ID=\"rhyme" + counter + "\" ROWS=1 COLS=40 CLASS=\"text ui-widget-content ui-corner-all\"></TEXTAREA><BR />";
           document.getElementById(divName).appendChild(newdiv);
           counter++;
           counterShow++;

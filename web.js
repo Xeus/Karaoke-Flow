@@ -46,7 +46,8 @@ app.get('/', function(request, response) {
 
         var templateData = {
             pageTitle : "Karaoke Flow",
-            activeFlowNames : flowNames
+            activeFlowNames : flowNames,
+            admin : false
         };
     
         response.render("index.html", templateData);
@@ -71,7 +72,8 @@ app.get('/create', function(request, response) {
     // prepare new flow with the form data
     var flowData = {
         flowID : flowCount,
-        name : randRoomName
+        name : randRoomName,
+        admin : false
     };
     
     var newFlow = new Flow(flowData);
@@ -210,7 +212,8 @@ app.get('/create/:flowID', function(request, response) {
                 randomTopic1 : topics[randomTopicNum1],
                 randomTopic2 : topics[randomTopicNum2],
                 flow : flow,
-                timeRemaining : timeRemaining
+                timeRemaining : timeRemaining,
+                admin : false
             };
 
             if (timeRemaining <= 1) {
@@ -266,16 +269,22 @@ app.post('/create/:flowID', function(request, response) {
             console.log("currentTime: " + currentTime.valueOf());
             var timeRemaining = Math.floor((endTime - currentTime.valueOf()) / 1000);
 
-            var rhymeData = {
-                body : request.body.rhyme,
-                flowID : request.params.flowID,
-                topic1 : request.body.topic1,
-                topic2 : request.body.topic2
-            };
+            FlowStat.findOne({ flowStatsID: 0 }, function(err, getRhymeCount) {
+                var nextRhymeCount = getRhymeCount.rhymeCount+1;
+                var rhymeData = {
+                    body : request.body.rhyme,
+                    rhymeID : nextRhymeCount,
+                    flowID : request.params.flowID,
+                    topic1 : request.body.topic1,
+                    topic2 : request.body.topic2
+                };
 
-            var newRhyme = new Rhyme(rhymeData);
-            newRhyme.save();
+                var newRhyme = new Rhyme(rhymeData);
+                newRhyme.save();
+
+            });
         
+            // TODO -- isn't saving to db?
             var flowData = {
                 topic1 : request.body.topic1,
                 topic2 : request.body.topic2
@@ -285,14 +294,15 @@ app.post('/create/:flowID', function(request, response) {
             rhymesJoined = rhymesTemp.join("|");
 
             FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : 1 } } );
-            Flow.findOne({ flowID : request.params.flowID }).update({ $push : { compiledFlow : rhymesJoined } });
+            Flow.findOne({ flowID : request.params.flowID }).update({ $push : { compiledFlow : rhymesJoined, topic1 : request.body.topic1, topic2 : request.body.topic2 } });
 
             var templateData = {
                 pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
                 randomTopic1 : request.body.topic1,
                 randomTopic2 : request.body.topic2,
                 flow : flow,
-                timeRemaining : timeRemaining
+                timeRemaining : timeRemaining,
+                admin : false
             };
 
             if (timeRemaining <= 0) {
@@ -328,7 +338,8 @@ app.get('/perform/:flowID', function(request, response) {
             var flowData = {
                 flowName : flow.name,
                 pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow",
-                rhymes : rhymes
+                rhymes : rhymes,
+                admin : false
             };
 
             // Render the perform template - pass in the flowData.
@@ -344,10 +355,134 @@ app.get('/perform/:flowID', function(request, response) {
 
 app.get('/about', function(request, response) {
     var templateData = {
-        pageTitle : "What's All This About?"
+        pageTitle : "What's All This About?",
+        admin : false
     };
 
     response.render("about.html", templateData);
+});
+
+
+
+// admin stuff all below
+
+app.get("/flows", function(request, response) {
+    Flow.find({}, function (err, flows) {
+
+        if (err) {
+            //an error occurred
+            console.log("something went wrong");
+        }
+
+        templateData = {
+            pageTitle : "All Da Flows :: Karaoke Flow",
+            flows : flows,
+            admin: true
+        };
+        response.render('flows.html', templateData);
+    });
+});
+
+
+
+// TODO -- make this functional
+app.get("/flows/update/:flowID", function(request, response) {
+    var requestedFlowID = request.params.flowID;
+
+    // find the requested document
+    Flow.findOne({ flowID: requestedFlowID }, function(err, flow) {
+        if (err) {
+            console.log(err);
+            response.send("An error occurred!");
+        }
+
+        if (flow == null ) {
+            console.log('Flow not found.');
+            response.send("Uh oh, can't find that flow.");
+
+        }
+        else {
+            templateData = {
+                pageTitle : "Update Dat Specific Flow :: Karaoke Flow",
+                flow : flow,
+                updated : request.query.update,
+                admin: true
+            };
+            response.render('flow_update.html', templateData);
+        }
+    });
+
+});
+
+
+app.get("/rhymes", function(request, response) {
+    Rhyme.find({}, function (err, rhymes) {
+
+        if (err) {
+            //an error occurred
+            console.log("something went wrong");
+        }
+
+        templateData = {
+            pageTitle : "All Da Rhymes :: Karaoke Flow",
+            rhymes: rhymes,
+            admin: true
+        };
+        response.render('rhymes.html', templateData);
+    });
+});
+
+
+
+app.post("/rhymes/update", function(request, response){
+    var rhymeID = request.body.rhymeID;
+
+    var condition = { rhymeID: rhymeID };
+
+    // update these fields with new values
+    var updatedData = {
+        body : request.body.rhymeBody,
+        topic1 : request.body.rhymeTopic1,
+        topic2 : request.body.rhymeTopic2
+    };
+
+    // we only want to update a single document
+    var options = { multi : false };
+
+    Rhyme.update(condition, updatedData, options, function(err, numAffected){
+
+        if (err) {
+            console.log('Update Error Occurred');
+            response.send('Update Error Occurred ' + err);
+        }
+        else {
+            console.log("Update succeeded.");
+            console.log(numAffected + " document(s) updated.");
+
+            //redirect the user to the update page - append ?update=true to URL
+            response.redirect('/rhymes');
+        }
+    });
+
+});
+
+
+
+app.get("/stats", function(request, response) {
+    FlowStat.findOne({ flowStatsID: 0 }, function (err, stats) {
+
+        if (err) {
+            //an error occurred
+            console.log("something went wrong");
+        }
+
+        templateData = {
+            pageTitle : "Statistics :: Karaoke Flow",
+            stats : stats,
+            admin : true
+        };
+        response.render('stats.html', templateData);
+    });
 });
 
 

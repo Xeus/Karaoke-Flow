@@ -20,6 +20,15 @@
 <DIV ID="karaokeFlow"><A HREF="/">Karaoke Flow</A></DIV>
 </DIV>
 
+<% if (admin == true) { %>
+<BR />
+<DIV ID="adminHeader"><CENTER>[
+<A HREF="/flows">all flows</A>
+| <A HREF="/rhymes">all rhymes</A>
+| <A HREF="/stats">stats</A>
+]</CENTER></DIV>
+<% } %>
+
 <%- body %>
 
 <BR /><BR />

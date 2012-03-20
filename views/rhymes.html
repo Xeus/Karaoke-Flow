@@ -1,0 +1,37 @@
+<CENTER>
+
+<TABLE BORDER=0 CELLPADDING=10><TR><TD VALIGN="middle"><H2>All Da Rhymes.</H2></TD></TR></TABLE><BR />
+
+<TABLE ID="bodyTable"><TR><TD VALIGN="top">
+
+<CENTER>
+
+<% for (var i=0; i<rhymes.length; i++) { %>
+<FORM NAME="rhymeForm<%= i %>" ID="rhymeForm<%= i %>" METHOD="post" ACTION="/rhymes/update">
+<INPUT TYPE="hidden" NAME="rhymeID" VALUE="<%= rhymes[i].rhymeID %>" />
+<TABLE BORDER=0>
+<TR><TD ALIGN="right" VALIGN="middle">rhyme/s</TD>
+<TD><INPUT TYPE="text" NAME="rhymeBody" ID="rhyme<%= i %>Body" VALUE="<%= rhymes[i].body %>" CLASS="text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
+<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhyme<%= i %>Topic1" VALUE="<%= rhymes[i].topic1 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
+<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhyme<%= i %>Topic2" VALUE="<%= rhymes[i].topic2 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">date</TD>
+<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhyme<%= i %>Date" READONLY="true" VALUE="<%= rhymes[i].date %>" CLASS="text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+</TABLE>
+
+<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme<%= i %>" VALUE="update dis rhyme!" CLASS="glow" STYLE="font-size: 17pt;" />
+
+</FORM><BR /><HR NOSHADE SIZE=1 COLOR="black"><BR />
+<% } %>
+
+</CENTER>
+
+</TD></TR></TABLE> <!-- /bodyTable -->
+
+<script type="text/javascript">
+
+$(function() {
+});
+
+</script>

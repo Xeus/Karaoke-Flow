@@ -2,7 +2,7 @@
 	*, INPUT[type="submit"] { font-family: 'Permanent Marker', cursive; }
 	BODY { margin: 0px; background: #F96B2D; }
 	A { color: black; }
-	INPUT[type="text"], TEXTAREA { font-size: 18pt; border: 1px solid #000000; background: #F99461; padding: 6px;}
+	INPUT[type="text"], TEXTAREA { font-size: 18pt; border: 1px solid #000000 !important; background: #F99461 !important; padding: 6px;}
 	#tablePrompts { text-align: center; background: #28F348; color: #6D249E; border-style: dotted; border-width: 3px; border-color: #F96B2D; }
 	#tablePrompts TD { padding: 20px; font-size: 20pt; }
 	.rhymeAnswers { color: black; }
@@ -30,6 +30,7 @@
 	#flowName { font-size: 20pt;}
 	#aboutTable { width: 50%;}
 	#aboutTable TD { font-size: 15pt;}
+	#adminHeader { margin: auto; display: inline; width: 400px; align: center;}
 
 	/* from http://www.zurb.com/playground/radioactive-buttons */
 	@-webkit-keyframes bluePulse {
