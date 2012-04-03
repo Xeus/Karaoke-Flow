@@ -355,7 +355,8 @@ app.get('/perform/:flowID', function(request, response) {
                 pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow",
                 rhymes : rhymes,
                 admin : false,
-                allLists : false // shows lists of rhymes/flows/stats nav if true
+                allLists : false, // shows lists of rhymes/flows/stats nav if true
+                layout: false // has its own layout
             };
 
             // Render the perform template - pass in the flowData.
