@@ -1,0 +1,58 @@
+<TABLE ID="bodyTable"><TR><TD VALIGN="top" STYLE="background: ;">
+
+<CENTER>
+
+<FORM NAME="rhymeForm" ID="rhymeForm" METHOD="post" ACTION="/rhymes/update">
+<INPUT TYPE="hidden" NAME="rhymeID" VALUE="<%= rhymes.rhymeID %>" />
+<TABLE BORDER=0>
+<TR><TD ALIGN="right" VALIGN="middle">rhyme/s</TD>
+<TD><INPUT TYPE="text" NAME="rhymeBody" ID="rhymeBody" VALUE="<%= rhymes.body %>" CLASS="text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
+<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhymeTopic1" VALUE="<%= rhymes.topic1 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
+<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhymeTopic2" VALUE="<%= rhymes.topic2 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">date</TD>
+<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhymeDate" READONLY="true" VALUE="<%= rhymes.date %>" CLASS="text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+</TABLE>
+
+<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme" VALUE="update dis rhyme!" CLASS="glow" STYLE="font-size: 17pt;" />
+
+<!-- DIV confirms successful AJAX post msg -->
+<DIV ID="updated" CLASS="text ui-widget-content ui-corner-all" STYLE="display: none; background: yellow;"></DIV>
+
+</FORM>
+
+</CENTER>
+
+</TD></TR></TABLE> <!-- /bodyTable -->
+
+<script type="text/javascript">
+
+$(function() {
+// loops through all rhymes and gives them click handlers
+	$('#updateRhyme').click(function(e) {
+		console.log("Fired");
+		formData = $('#rhymeForm').serialize();
+		$.ajax({
+			url: "/rhymes/update",
+			type: "POST",
+			data: formData,
+			dataType: "json",
+			success: function(response) {
+				if (response.status == "OK") {
+                    console.log("Rhyme modified successfully, let's display it.");
+                    $("#updated").html("Updated!");
+                    $("#updated").css("display", "block");
+                }
+            }, 
+            error : function(error) {
+                console.log("There was an error updating the rhyme.");
+                console.log(error);
+            }
+		});
+		e.preventDefault();
+		return false;
+	});
+});
+
+</script>

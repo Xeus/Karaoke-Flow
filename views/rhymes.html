@@ -4,34 +4,36 @@
 
 <TABLE ID="bodyTable"><TR><TD VALIGN="top">
 
-<CENTER>
-
+<UL>
+<!-- need to refresh this upon AJAX refresh -->
 <% for (var i=0; i<rhymes.length; i++) { %>
-<FORM NAME="rhymeForm<%= i %>" ID="rhymeForm<%= i %>" METHOD="post" ACTION="/rhymes/update">
-<INPUT TYPE="hidden" NAME="rhymeID" VALUE="<%= rhymes[i].rhymeID %>" />
-<TABLE BORDER=0>
-<TR><TD ALIGN="right" VALIGN="middle">rhyme/s</TD>
-<TD><INPUT TYPE="text" NAME="rhymeBody" ID="rhyme<%= i %>Body" VALUE="<%= rhymes[i].body %>" CLASS="text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
-<TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhyme<%= i %>Topic1" VALUE="<%= rhymes[i].topic1 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
-<TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhyme<%= i %>Topic2" VALUE="<%= rhymes[i].topic2 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
-<TR><TD ALIGN="right" VALIGN="middle">date</TD>
-<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhyme<%= i %>Date" READONLY="true" VALUE="<%= rhymes[i].date %>" CLASS="text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
-</TABLE>
-
-<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme<%= i %>" VALUE="update dis rhyme!" CLASS="glow" STYLE="font-size: 17pt;" />
-
-</FORM><BR /><HR NOSHADE SIZE=1 COLOR="black"><BR />
+<LI><DIV CLASS="showRhymes" ID="rhyme<%= i %>" TITLE="(topic #1: <%= rhymes[i].topic1 %>, topic #2: <%= rhymes[i].topic2 %>, date: <%= rhymes[i].date %>"><%= rhymes[i].body %> <SPAN STYLE="font-size: 8pt; font-family: Arial;">[ <A HREF="" onClick="toggleEdit(<%= i %>, <%= rhymes[i].rhymeID %>); return false;" ID="rhymeLink<%= i %>">edit</A> ]</SPAN>
+<DIV ID="rhymeContents<%= i %>" STYLE="display: none;">hi</DIV>
+</DIV></LI>
 <% } %>
-
-</CENTER>
+</UL>
 
 </TD></TR></TABLE> <!-- /bodyTable -->
 
 <script type="text/javascript">
 
+var toggleEdit = function(i, rhymeID) {
+		if ($("#rhymeLink"+i).html() == "edit") {
+			$("#rhymeLink" + i).html("hide");
+			$("#rhymeContents" + i).load("/rhymes/" + rhymeID + "/edit");
+			$("#rhyme"+i).css("border-style", "dotted");
+			$("#rhyme"+i).css("border-color", "black");
+			$("#rhyme"+i).css("border-width", "1px");
+		}
+		else {
+			$("#rhymeLink" + i).html("edit");
+			$("#rhyme"+i).css("border-width", "0px");
+		}
+		$("#rhymeContents" + i).toggle();
+}
+
 $(function() {
+
 });
 
 </script>

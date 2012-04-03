@@ -7,12 +7,12 @@ Party game.  People get 5 minutes to create rhymes from a prompt of 2 common rap
 topics.  Then when time's up, someone has to perform the song and should be
 judged on his/her flow!
 
-Last update 06 Mar 12:  Functional from start to end.
+Last update 02 Apr 12:  Added some JSON/REST, AJAX updates for rhymes.
 
 TODO:
 -random flow made up of past rhymes
 -insert choruses
 -insert random rappers' rhymes
 -add more phat beats (from Raj?)
--karaoke highlighting line-by-line for performance?
+-karaoke highlighting line-by-line for performance? (partial)
 -hook up to microphone & beat machine & recorder?

@@ -10,6 +10,7 @@
 <link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
 <link href='/css/kf.css' rel='stylesheet' type='text/css'>
 <link type="text/css" href="/css/pepper-grinder/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+<SCRIPT TYPE="text/javascript" SRC="/js/keymaster.min.js"></SCRIPT>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery-ui-1.8.17.custom.min.js"></script>
 </HEAD>
@@ -21,8 +22,15 @@
 </DIV>
 
 <% if (admin == true) { %>
-<BR />
-<DIV ID="adminHeader"><CENTER>[
+<DIV ID="adminHeader"><CENTER>[ ADMIN: 
+<A HREF="/flows/edit">all flows</A>
+| <A HREF="/rhymes/edit">all rhymes</A>
+| <A HREF="/stats/edit">stats</A> <!-- TODO: make this work -->
+]</CENTER></DIV>
+<% } %>
+
+<% if (allLists == true) { %>
+<DIV ID="adminHeader"><CENTER>[ LISTS: 
 <A HREF="/flows">all flows</A>
 | <A HREF="/rhymes">all rhymes</A>
 | <A HREF="/stats">stats</A>

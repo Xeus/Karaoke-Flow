@@ -14,6 +14,8 @@
 
 -->
 
+('j' to highlight next line, 'k' to highlight previous line)
+
 <iframe width="400" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F35694882&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
 
 </TD><TD VALIGN="top" ALIGN="center" CLASS="performTD">
@@ -26,13 +28,15 @@ this dope flow is called:<BR />
 <BR />
 
 <%
+lineCounter = 0;
+currentLine = 0;
 rhymes2 = rhymes.split(",");
 for (var i=0; i<rhymes2.length; i++) {
 	var rhymesSplit = rhymes2[i].split("|");
 	for (var j=0; j<rhymesSplit.length; j++) {
 %>
-<%= rhymesSplit[j] %><BR />
-<% } %>
+<SPAN TITLE="<%= lineCounter %>" ID="line<%= lineCounter %>" CLASS="<% if (lineCounter == currentLine || lineCounter == 0) { %>lyricsCurrent<% } else if (lineCounter == currentLine - 1 || lineCounter == currentLine + 1) { %>lyricsNeighbor<% } %>"><%= rhymesSplit[j] %></SPAN><BR />
+<% lineCounter++; } %>
 <HR NOSHADE SIZE=1 COLOR="black">
 <% } %>
 
@@ -41,8 +45,35 @@ for (var i=0; i<rhymes2.length; i++) {
 </TD></TR></TABLE>
 
 <script type="text/javascript">
-
 $(function() {
+	lineCounter = <%= lineCounter %>;
+	currentLine = <%= currentLine %>;
+	key('j', function() {
+		if (currentLine < lineCounter-1) {
+			lastLine = currentLine - 1;
+			nextLine = currentLine + 1;
+			$("#line"+currentLine).removeClass("lyricsCurrent");
+			$("#line"+lastLine+", #line"+nextLine).removeClass("lyricsNeighbor");
+			currentLine++;
+			lastLine = currentLine - 1;
+			nextLine = currentLine + 1;
+			$("#line"+currentLine).addClass("lyricsCurrent");
+			$("#line"+lastLine+", #line"+nextLine).addClass("lyricsNeighbor");
+		}
+	});
+	key('k', function() {
+		if (currentLine > 0) {
+			lastLine = currentLine + 1;
+			nextLine = currentLine - 1;
+			$("#line"+currentLine).removeClass("lyricsCurrent");
+			$("#line"+lastLine+", #line"+nextLine).removeClass("lyricsNeighbor");
+			currentLine--;
+			lastLine = currentLine + 1;
+			nextLine = currentLine - 1;
+			$("#line"+currentLine).addClass("lyricsCurrent");
+			$("#line"+lastLine+", #line"+nextLine).addClass("lyricsNeighbor");
+		}
+	});
 	$("#submitRhymes").button().click(function() {
 		window.location = '/perform';
 		return false;

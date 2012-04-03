@@ -14,7 +14,7 @@
 	#karaokeFlow A { text-decoration: none; color: #6D249E;}
 	#javascript_countdown_time { color: #6D249E; }
 	#performFlowTitle { text-transform: uppercase; font-size: 25pt; }
-	.performTD { font-size: 20pt;}
+	.performTD { font-size: 20pt; }
 	#submitRhymes { font-size: 30pt; }
 	#submitRhymes:hover { background: white; color: black; }
 	.help { color: gray !important; border-size: 0pt !important; background: white !important; font-size: 10pt; }
@@ -25,12 +25,15 @@
 	.glow { -webkit-animation-name: bluePulse; -webkit-animation-duration: 2s; -webkit-animation-iteration-count: infinite; }
 	BUTTON:hover, INPUT[type="submit"]:hover { background: white !important; color: black !important; }
 	#dialog { font-size: 12pt; font-family: Arial;}
-	#lyrics { color: black; font-size: 25pt; text-align: justify; font-family: 'Amethysta', serif; text-align: center;}
+	#lyrics {  color: #8C3C19; font-size: 20pt; text-align: justify; font-family: 'Amethysta', serif; text-align: center; line-height: .9em;}
+	.lyricsCurrent { font-size: 40pt; color: white; padding-left: 5px; padding-right: 5px; padding-top: 0px; padding-bottom: 0px; }
+	.lyricsNeighbor { font-size: 35pt; /* color: #4F220E; */ }
 	#lyricsTable { margin-left: auto; margin-right: auto; }
 	#flowName { font-size: 20pt;}
 	#aboutTable { width: 50%;}
 	#aboutTable TD { font-size: 15pt;}
 	#adminHeader { margin: auto; display: inline; width: 400px; align: center;}
+	.showRhymes { font-size: 20pt; }
 
 	/* from http://www.zurb.com/playground/radioactive-buttons */
 	@-webkit-keyframes bluePulse {
