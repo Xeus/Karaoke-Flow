@@ -58,12 +58,12 @@ module.exports = function(app) {
 
 
     // ROUTES: admin.js
-    app.get("/flows/edit", adminRoute.editFlow);
-    app.get("/flows/update/:flowID", adminRoute.updateFlow);
-    app.get("/rhymes/edit", adminRoute.editAllRhymes);
-    app.get("/rhymes/:rhymeID/edit", adminRoute.editRhyme);
-    app.post("/rhymes/update", adminRoute.updateRhyme);
-    app.get("/stats", adminRoute.stats);
+    app.get("/flows/edit", ensureAuthenticated, adminRoute.editFlow);
+    app.get("/flows/update/:flowID", ensureAuthenticated, adminRoute.updateFlow);
+    app.get("/rhymes/edit", ensureAuthenticated, adminRoute.editAllRhymes);
+    app.get("/rhymes/:rhymeID/edit", ensureAuthenticated, adminRoute.editRhyme);
+    app.post("/rhymes/update", ensureAuthenticated, adminRoute.updateRhyme);
+    app.get("/stats", ensureAuthenticated, adminRoute.stats);
 
 
 
@@ -96,6 +96,7 @@ module.exports = function(app) {
         } else {
             response.redirect('/account');
         }
+        //response.redirect('/account');
     });
     
     // Display account page

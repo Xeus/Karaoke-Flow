@@ -4,17 +4,13 @@ var db = require('../accessDB');
 
 module.exports = {
 
-    // app.get('/'...)
-    // userRoute.index
-    index: function(request, response) {
-      
-        templateData = {}
-        response.render('index.html', templateData);
-    },
-
     // app.get('/register'...)
     getRegister: function(request, response) {
-        response.render('register.html');
+        templateData = {
+            allLists : false,
+             admin : false
+        }
+        response.render('register.html', templateData);
     },
 
     // app.post('/register'...)
@@ -24,6 +20,8 @@ module.exports = {
             , lname : request.param('lastname')
             , email : request.param('email')
             , password : request.param('password')
+            , allLists : false,
+             admin : false
         }
         
         db.saveUser(userData, function(err,docs) {
@@ -58,18 +56,29 @@ module.exports = {
     login: function(request, response) {
         
         templateData = {
-             message: request.flash('error')[0] // get error message is received from prior login attempt
+             message: request.flash('error')[0], // get error message is received from prior login attempt
+             redirect : request.flash("redirect"),
+             allLists : false,
+             admin : false,
+             solo : false
         }
         
-        response.render('login.html', templateData);
+        if (request.xhr) {
+            response.partial('login.html', templateData);
+        }
+        else {
+            templateData.solo = true;
+            response.render('login.html', templateData);
+        }
     },
 
     // app.get('/account', ensureAuthenticated, ...
     getAccount: function(request, response) {
         templateData = {
             currentUser : request.user,
-            message : request.flash('message')[0] // get message is received from prior form submission like password change
-
+            message : request.flash('message')[0], // get message is received from prior form submission like password change
+            allLists : false,
+            admin : false
         }
     
         response.render('account.html', templateData );

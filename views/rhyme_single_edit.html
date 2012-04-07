@@ -4,18 +4,18 @@
 
 <FORM NAME="rhymeForm" ID="rhymeForm" METHOD="post" ACTION="/rhymes/update">
 <INPUT TYPE="hidden" NAME="rhymeID" VALUE="<%= rhymes.rhymeID %>" />
-<TABLE BORDER=0>
+<TABLE BORDER=0 CLASS="rhymeSingle">
 <TR><TD ALIGN="right" VALIGN="middle">rhyme/s</TD>
-<TD><INPUT TYPE="text" NAME="rhymeBody" ID="rhymeBody" VALUE="<%= rhymes.body %>" CLASS="text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
+<TD><TEXTAREA NAME="rhymeBody" ID="rhymeBody" CLASS="edit text ui-widget-content ui-corner-all" ROWS=3 COLS=40><%= rhymes.body %></TEXTAREA></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhymeTopic1" VALUE="<%= rhymes.topic1 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhymeTopic1" VALUE="<%= rhymes.topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhymeTopic2" VALUE="<%= rhymes.topic2 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhymeTopic2" VALUE="<%= rhymes.topic2 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">date</TD>
-<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhymeDate" READONLY="true" VALUE="<%= rhymes.date %>" CLASS="text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhymeDate" READONLY="true" VALUE="<%= rhymes.date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
 </TABLE>
 
-<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme" VALUE="update dis rhyme!" CLASS="glow" STYLE="font-size: 17pt;" />
+<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme" VALUE="update dis rhyme!" CLASS="glow text ui-widget-content ui-corner-all" STYLE="font-size: 17pt;" />
 
 <!-- DIV confirms successful AJAX post msg -->
 <DIV ID="updated" CLASS="text ui-widget-content ui-corner-all" STYLE="display: none; background: yellow;"></DIV>

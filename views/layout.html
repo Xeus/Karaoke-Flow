@@ -25,28 +25,41 @@
 <BR /><BR />
 
 <DIV CLASS="headfoot" ID="footer"><BR />
+
 [ <A HREF="/">home</A> | <A HREF="/about">about</A> | <A HREF="http://benturner.com/contact_me.php">contact</A> ]
 
 [ JSON: <A HREF="/flows/json">flows</A> | <A HREF="/rhymes/json">rhymes</A> | <A HREF="/all/json">all</A> ]
 
-<% if (allLists == true) { %>
-<SPAN ID="adminHeader">[ LISTS: 
+[ LISTS: 
 <A HREF="/flows">all flows</A>
 | <A HREF="/rhymes">all rhymes</A>
 | <A HREF="/stats">stats</A>
-]</SPAN>
-<% } %>
+]
 
 <% if (admin == true) { %>
-<SPAN ID="adminHeader">[ ADMIN: 
+<BR /><SPAN ID="adminHeader">[ ADMIN: 
 <A HREF="/flows/edit">all flows</A>
 | <A HREF="/rhymes/edit">all rhymes</A>
 | <A HREF="/stats/edit">stats</A> <!-- TODO: make this work -->
 ]</SPAN>
+<% } else { %>
+<BR />[ ADMIN: <A HREF="/register">register</A> | <A HREF="" ID="adminLogin">login</A> ]
 <% } %>
 
+<BR /><BR /><SPAN ID="adminHeader"></SPAN>
+
 <BR /><BR />
-</DIV>
+</DIV> <!-- /headfoot -->
+
+<SCRIPT TYPE="text/javascript">
+
+$(function() {
+	$("#adminLogin").click(function() {
+		$("#adminHeader").load("/login");
+		return false;
+	});
+});
+</SCRIPT>
 
 </BODY>
 

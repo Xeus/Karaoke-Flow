@@ -2,20 +2,23 @@
 	*, INPUT[type="submit"] { font-family: 'Permanent Marker', cursive; }
 	BODY { margin: 0px; background: #F96B2D; }
 	A { color: black; }
-	INPUT[type="text"], TEXTAREA { font-size: 18pt; border: 1px solid #000000 !important; background: #F99461 !important; padding: 6px;}
+	INPUT[type="text"], TEXTAREA, INPUT[type="password"] { font-size: 18pt; border: 1px solid #000000 !important; background: #F99461 !important; padding: 6px;}
 	#tablePrompts { text-align: center; background: #28F348; color: #6D249E; border-style: dotted; border-width: 3px; border-color: #F96B2D; }
 	#tablePrompts TD { padding: 20px; font-size: 20pt; }
 	.rhymeAnswers { color: black; }
 	#header { border-bottom-width: 3px; border-bottom-style: dotted; border-bottom-color: #F96B2D; }
 	#footer { border-top-width: 3px; border-top-style: dotted; border-top-color: #F96B2D; }
-	.headfoot { background: #28F348; text-align: center; color: #6D249E; margin: 0px; }
+	.headfoot { background: #28F348; text-align: center; color: #6D249E; margin: 0px; width: 100%;}
 	#karaokeFlow { font-size: 60pt; align: center; letter-spacing: -3px; }
 	H2 { font-size: 30pt; display: inline;}
 	#karaokeFlow A { text-decoration: none; color: #6D249E;}
+	::-webkit-input-placeholder { color: gray; }
+	:-moz-placeholder { color: gray; }
 	#javascript_countdown_time { color: #6D249E; }
 	#performFlowTitle { text-transform: uppercase; font-size: 35pt; }
 	.performTD { font-size: 20pt; }
 	#submitRhymes { font-size: 30pt; }
+	#registerBody { padding-left: 15px; }
 	#submitRhymes:hover { background: white; color: black; }
 	.help { color: gray !important; border-size: 0pt !important; background: white !important; font-size: 10pt; }
 	.addLine { border-color: white !important; border-size: 0pt !important; }
@@ -33,7 +36,9 @@
 	#aboutTable { width: 50%;}
 	#aboutTable TD { font-size: 15pt;}
 	#adminHeader { margin: auto; display: inline; width: 400px; align: center;}
-	.showRhymes { font-size: 20pt; }
+	.showRhymes { font-size: 20pt; font-family: Helvetica, Arial; }
+	.edit { font-family: Helvetica, Arial; font-size: 8pt !important;}
+	.rhymeSingle TD { font-family: Helvetica, Arial; }
 
 	/* from http://www.zurb.com/playground/radioactive-buttons */
 	@-webkit-keyframes bluePulse {
