@@ -12,16 +12,16 @@
 <INPUT TYPE="hidden" NAME="rhymeID" VALUE="<%= rhymes[i].rhymeID %>" />
 <TABLE BORDER=0>
 <TR><TD ALIGN="right" VALIGN="middle">rhyme/s</TD>
-<TD><INPUT TYPE="text" NAME="rhymeBody" ID="rhyme<%= i %>Body" VALUE="<%= rhymes[i].body %>" CLASS="text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
+<TD><TEXTAREA NAME="rhymeBody" ID="rhyme<%= i %>Body" ROWS=3 COLS=40 CLASS="edit text ui-widget-content ui-corner-all" SIZE=40><%= rhymes[i].body %></TEXTAREA></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhyme<%= i %>Topic1" VALUE="<%= rhymes[i].topic1 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhyme<%= i %>Topic1" VALUE="<%= rhymes[i].topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhyme<%= i %>Topic2" VALUE="<%= rhymes[i].topic2 %>" CLASS="text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhyme<%= i %>Topic2" VALUE="<%= rhymes[i].topic2 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">date</TD>
-<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhyme<%= i %>Date" READONLY="true" VALUE="<%= rhymes[i].date %>" CLASS="text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhyme<%= i %>Date" READONLY="true" VALUE="<%= rhymes[i].date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
 </TABLE>
 
-<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme<%= i %>" VALUE="update dis rhyme!" CLASS="glow" STYLE="font-size: 17pt;" />
+<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme<%= i %>" VALUE="update dis rhyme!" CLASS="glow text ui-widget-content ui-corner-all" STYLE="font-size: 17pt;" />
 
 <!-- DIV confirms successful AJAX post msg -->
 <DIV ID="updated<%= i %>" CLASS="text ui-widget-content ui-corner-all" STYLE="display: none; background: yellow;"></DIV>

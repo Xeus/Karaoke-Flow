@@ -19,6 +19,7 @@
 	.performTD { font-size: 20pt; }
 	#submitRhymes { font-size: 30pt; }
 	#registerBody { padding-left: 15px; }
+	.instructions { font-size: 20pt; }
 	#submitRhymes:hover { background: white; color: black; }
 	.help { color: gray !important; border-size: 0pt !important; background: white !important; font-size: 10pt; }
 	.addLine { border-color: white !important; border-size: 0pt !important; }

@@ -12,91 +12,6 @@ module.exports = {
         response.render('index.html', templateData);
     },
 
-    // app.get('/register'...)
-    getRegister: function(request, response) {
-        response.render('register.html');
-    },
-
-    // app.post('/register'...)
-    postRegister: function(request, response) {
-        userData = {
-              fname : request.param('firstname')
-            , lname : request.param('lastname')
-            , email : request.param('email')
-            , password : request.param('password')
-        }
-        
-        db.saveUser(userData, function(err,docs) {
-            response.redirect('/account');
-        });
-    },
-
-    postChangePassword : function(request, response) {
-        if (request.param('password') == request.param('password2')) {
-            
-            //look up user
-            db.User.findById(request.user._id, function(err, user){
-                
-                //set the new password
-                user.set('password', request.param('password'));
-                user.save();
-                
-                // set Flash message and redirect back to /account
-                request.flash("message", "Password was updated");
-                response.redirect('/account');
-                
-            })
-            
-        } else {
-            
-            request.flash("message", "Passwords Do Not Match");
-            response.redirect('/account');
-        }
-    },
-    
-    // app.get('/login', ...
-    login: function(request, response) {
-        
-        templateData = {
-             message: request.flash('error')[0] // get error message is received from prior login attempt
-        }
-        
-        response.render('login.html', templateData);
-    },
-
-    // app.get('/account', ensureAuthenticated, ...
-    getAccount: function(request, response) {
-        templateData = {
-            currentUser : request.user,
-            message : request.flash('message')[0] // get message is received from prior form submission like password change
-
-        }
-    
-        response.render('account.html', templateData );
-    },
-
-    getUsers : function(request, response) {
-        
-        // query for all users only retrieve email and name
-        db.User.find({},['email','name.first','name.last'], function(err,users) {
-            
-            if (err) {
-                console.log(err);
-                response.send("an error occurred");
-            }
-            
-            response.json(users);
-            
-        })
-        
-    },
-    
-    // app.get('/logout'...)
-    logout: function(request, response){
-        request.logout();
-        response.redirect('/');
-    },
-
     intro: function(request, response) {
         var flowNames = [];
 
@@ -109,11 +24,14 @@ module.exports = {
                 flowNames.push(activeFlowNames[i].name);
             }
 
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
             var templateData = {
                 pageTitle : "Karaoke Flow",
                 activeFlowNames : flowNames,
                 admin : false, // shows admin nav if true
-                allLists : false // shows lists of rhymes/flows/stats nav if true
+                loggedIn : loggedIn
             };
     
             response.render("index.html", templateData);
@@ -129,12 +47,15 @@ module.exports = {
         var randRoomNum = Math.floor(Math.random()*10000); // makes somewhat random room name
         var randRoomName = "room" + randRoomNum;
 
+        // will show admin nav edit links if logged in
+        if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
         // prepare new flow with the form data
         var flowData = {
             flowID : flowCount,
             name : randRoomName,
             admin : false,
-            allLists : false // shows lists of rhymes/flows/stats nav if true
+            loggedIn : true
         };
     
         var newFlow = new Flow(flowData);
@@ -175,7 +96,7 @@ module.exports = {
                 active : true
             };
     
-            var newFlow = new Flow(flowData);
+            var newFlow = new db.Flow(flowData);
             newFlow.save();
 
             // increment global flow number count
@@ -254,6 +175,8 @@ module.exports = {
                 var currentTime = new Date();
                 console.log("currentTime: " + currentTime.valueOf());
                 var timeRemaining = Math.floor((endTime - currentTime.valueOf()) / 1000);
+                // will show admin nav edit links if logged in
+                if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
                 var templateData = {
                     pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
                     randomTopic1 : topics[randomTopicNum1],
@@ -261,7 +184,7 @@ module.exports = {
                     flow : flow,
                     timeRemaining : timeRemaining,
                     admin : false,
-                    allLists : false
+                    loggedIn : loggedIn
                 };
 
                 if (timeRemaining <= 1) { // if no time left, auto-fwd to last pg
@@ -328,7 +251,7 @@ module.exports = {
                         topic2 : request.body.topic2
                     };
 
-                    var newRhyme = new Rhyme(rhymeData);
+                    var newRhyme = new db.Rhyme(rhymeData);
                     newRhyme.save();
 
                 });
@@ -346,6 +269,9 @@ module.exports = {
                 db.FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : 1 } } );
                 db.Flow.findOne({ flowID : request.params.flowID }).update({ $push : { compiledFlow : rhymesJoined, topic1 : request.body.topic1, topic2 : request.body.topic2 } });
 
+                // will show admin nav edit links if logged in
+                if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
                 var templateData = {
                     pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
                     randomTopic1 : request.body.topic1,
@@ -353,7 +279,7 @@ module.exports = {
                     flow : flow,
                     timeRemaining : timeRemaining,
                     admin : false,
-                    allLists : false // shows lists of rhymes/flows/stats nav if true
+                    loggedIn : loggedIn
                 };
 
                 if (timeRemaining <= 0) {
@@ -383,12 +309,20 @@ module.exports = {
                     rhymes = "[no rhymes entered]";
                 }
 
+                var beats = ['drake_onone', 'wizkhalifa_sots', '36mafia_hard'];
+                var randomBeat = Math.floor(Math.random() * beats.length);
+
+                // will show admin nav edit links if logged in
+                if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
                 var flowData = {
                     flowName : flow.name,
                     pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow",
                     rhymes : rhymes,
                     admin : false,
-                    allLists : false, // shows lists of rhymes/flows/stats nav if true
+                    randomBeat : randomBeat,
+                    beats : beats,
+                    loggedIn : loggedIn,
                     layout: false // has its own layout
                 };
 
@@ -400,11 +334,61 @@ module.exports = {
 
     },
 
+    performRandom: function(request, response) {
+
+        db.Rhyme.find({}, function(err, rhymes) {
+
+            if (err) {
+                console.log('Error');
+                console.log(err);
+                response.send("Uh oh, error compiling a random flow!");
+            }
+            else {
+                var numRhymes = 10;
+                var randomRhymes = '';
+                // don't want to look for more random rhymes than db actually has
+                if (rhymes.length < numRhymes) { numRhymes = rhymes.length; }
+                for (var i=0; i<numRhymes; i++) {
+                    randomRhymes += rhymes[i].body;
+                }
+                if (rhymes == undefined || rhymes == null) {
+                    rhymes = "[no rhymes entered]";
+                }
+
+                var beats = ['drake_onone', 'wizkhalifa_sots', '36mafia_hard'];
+                var randomBeat = Math.floor(Math.random() * beats.length);
+
+                // will show admin nav edit links if logged in
+                if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
+                var rhymeData = {
+                    flowName : "da illest random flow",
+                    pageTitle : "Step #2: Perform da Random Rhymes :: Karaoke Flow",
+                    rhymes : randomRhymes,
+                    admin : false,
+                    randomBeat : randomBeat,
+                    beats : beats,
+                    loggedIn : loggedIn,
+                    layout: false // has its own layout
+                };
+
+                // Render the perform template - pass in the flowData.
+                response.render("perform.html", rhymeData);
+            }
+
+        });
+
+    },
+
     about: function(request, response) {
+
+        // will show admin nav edit links if logged in
+        if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+        
         var templateData = {
             pageTitle : "What's All This About?",
             admin : false,
-            allLists : true // shows lists of rhymes/flows/stats nav if true
+            loggedIn : loggedIn
         };
 
         response.render("about.html", templateData);

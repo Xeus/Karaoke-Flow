@@ -7,6 +7,7 @@
             Karaoke Flow
         <% } %></TITLE>
 <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 <link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
 <link href='/css/kf.css' rel='stylesheet' type='text/css'>
 <link type="text/css" href="/css/pepper-grinder/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
@@ -46,23 +47,26 @@
 
 <TABLE BORDER=0 CELLPADDING=0><TR><TD VALIGN="middle"><H2 STYLE="font-size: 25pt;">Step #2: Perform da Rhymes</H2></TD></TR></TABLE><BR />
 
-<!--
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F13202558&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F11830171&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
-
-<iframe width="200" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F25711754&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
-
--->
-
 <DIV STYLE="padding-left: 15px;">
 
-A. Start Your Beat.<BR />
+<SPAN CLASS="instructions">A. Start Your Beat.</SPAN><BR />
 
-<iframe width="400" height="166" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F35694882&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
+<audio controls ID="audio1" preload="auto">
+<source src="/beats/<%= beats[randomBeat] %>.mp3" type="audio/mpeg" />
+<source src="/beats/<%= beats[randomBeat] %>.ogg" type="audio/ogg" />
+</audio>
+
+<!-- <object type="application/x-shockwave-flash" data="http://flash-mp3-player.net/medias/player_mp3.swf" width="200" height="20">
+    <param name="movie" value="/js/player_mp3_mini.swf" />
+    <param name="bgcolor" value="#000000" />
+    <param name="FlashVars" value="mp3=/beats/<%= beats[randomBeat] %>.mp3&loop=1" />
+</object> -->
+
 <BR /><BR />
-B. Rap da rhymes wit' yo' flow.  Press 'j' to highlight<BR />
-next line, 'k' to highlight previous line.
+<SPAN CLASS="instructions">B. Rap da rhymes wit' yo' flow.</SPAN>
+
+<BR /><BR />
+TIPS: Press 'j' to highlight next line, 'k' to highlight previous line.
 
 </DIV>
 
@@ -89,6 +93,16 @@ for (var i=0; i<rhymes2.length; i++) {
 </TD></TR></TABLE>
 
 <script type="text/javascript">
+
+// document.getElementById('audio').addEventListener('ended', function(){
+//     this.currentTime = 0;
+// }, false);
+
+document.getElementById('audio1').addEventListener('ended', function(){
+this.currentTime = 0;
+this.play();
+}, false);
+
 $(function() {
 	lineCounter = <%= lineCounter %>;
 	currentLine = <%= currentLine %>;
@@ -137,27 +151,32 @@ $(function() {
 <BR /><BR />
 
 <DIV CLASS="headfoot" ID="footer"><BR />
+
 [ <A HREF="/">home</A> | <A HREF="/about">about</A> | <A HREF="http://benturner.com/contact_me.php">contact</A> ]
 
 [ JSON: <A HREF="/flows/json">flows</A> | <A HREF="/rhymes/json">rhymes</A> | <A HREF="/all/json">all</A> ]
 
-<% if (allLists == true) { %>
-<SPAN ID="adminHeader">[ LISTS: 
+[ LISTS: 
 <A HREF="/flows">all flows</A>
 | <A HREF="/rhymes">all rhymes</A>
 | <A HREF="/stats">stats</A>
-]</SPAN>
-<% } %>
+]
 
 <% if (admin == true) { %>
-<SPAN ID="adminHeader">[ ADMIN: 
+<BR /><SPAN ID="adminHeader">[ ADMIN: 
 <A HREF="/flows/edit">all flows</A>
 | <A HREF="/rhymes/edit">all rhymes</A>
 | <A HREF="/stats/edit">stats</A> <!-- TODO: make this work -->
+| <A HREF="/logoff">logoff</A>
 ]</SPAN>
+<% } else { %>
+<BR />[ ADMIN: <A HREF="/register">register</A> | <A HREF="" ID="adminLogin">login</A> ]
 <% } %>
 
+<BR /><BR /><SPAN ID="adminHeader"></SPAN>
+
 <BR /><BR />
+</DIV> <!-- /headfoot -->
 
 </BODY>
 

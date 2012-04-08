@@ -7,16 +7,16 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
 var User = require('./models/user');
-require('./models/flow').configureSchema(Schema, mongoose);
-require('./models/rhyme').configureSchema(Schema, mongoose);
-require('./models/admin').configureSchema(Schema, mongoose);
+var Flow = require('./models/flow').configureSchema(Schema, mongoose);
+var Rhyme = require('./models/rhyme').configureSchema(Schema, mongoose);
+var Admin = require('./models/admin').configureSchema(Schema, mongoose);
 
 // Am also using foreman start/kf aliases to run locally.
 //app.db = mongoose.connect(process.env.MONGOLAB_URI); // requires .env file
 //require('./models').configureSchema(schema, mongoose);
-var Flow = mongoose.model('Flow'),
-    Rhyme = mongoose.model('Rhyme'),
-    FlowStat = mongoose.model('FlowStat');
+var Flow = mongoose.model('Flow');
+var Rhyme = mongoose.model('Rhyme');
+var FlowStat = mongoose.model('FlowStat');
 
 // Define local strategy for Passport
 passport.use(new LocalStrategy({

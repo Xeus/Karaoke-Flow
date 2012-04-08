@@ -36,11 +36,12 @@
 | <A HREF="/stats">stats</A>
 ]
 
-<% if (admin == true) { %>
+<% if (loggedIn == true) { %>
 <BR /><SPAN ID="adminHeader">[ ADMIN: 
-<A HREF="/flows/edit">all flows</A>
-| <A HREF="/rhymes/edit">all rhymes</A>
-| <A HREF="/stats/edit">stats</A> <!-- TODO: make this work -->
+<A HREF="/flows/edit">edit flows</A>
+| <A HREF="/rhymes/edit">edit rhymes</A>
+| <A HREF="/stats/edit">edit stats</A> <!-- TODO: make this work -->
+| <A HREF="/logoff">logoff</A>
 ]</SPAN>
 <% } else { %>
 <BR />[ ADMIN: <A HREF="/register">register</A> | <A HREF="" ID="adminLogin">login</A> ]

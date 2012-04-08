@@ -8,6 +8,7 @@ module.exports = {
     // admin stuff all below
 
     editFlow: function(request, response) {
+        if (request.user) { admin = true; } else { admin = false; }
         db.Flow.find({}, function (err, flows) {
 
             if (err) {
@@ -15,18 +16,22 @@ module.exports = {
                 console.log("something went wrong");
             }
 
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
             templateData = {
                 pageTitle : "All Da Flows :: Karaoke Flow",
                 flows : flows,
-                admin: true,
-                allLists : true // shows lists of rhymes/flows/stats nav if true
+                admin: admin,
+                loggedIn : loggedIn
             };
-            response.render('flows.html', templateData);
+            response.render('flows_edit.html', templateData);
         });
     },
 
     // TODO: make this functional
     updateFlow: function(request, response) {
+        if (request.user) { admin = true; } else { admin = false; }
         var requestedFlowID = request.params.flowID;
 
         // find the requested document
@@ -35,6 +40,9 @@ module.exports = {
                 console.log(err);
                 response.send("An error occurred!");
             }
+
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
 
             if (flow == null ) {
                 console.log('Flow not found.');
@@ -46,8 +54,8 @@ module.exports = {
                     pageTitle : "Update Dat Specific Flow :: Karaoke Flow",
                     flow : flow,
                     updated : request.query.update,
-                    admin: true,
-                    allLists : true // shows lists of rhymes/flows/stats nav if true
+                    admin: admin,
+                    loggedIn : loggedIn
                 };
                 response.render('flow_update.html', templateData);
             }
@@ -56,6 +64,7 @@ module.exports = {
     },
 
     editAllRhymes: function(request, response) {
+        if (request.user) { admin = true; } else { admin = false; }
         db.Rhyme.find({}, function (err, rhymes) {
 
             if (err) {
@@ -63,17 +72,21 @@ module.exports = {
                 console.log("something went wrong");
             }
 
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
             templateData = {
                 pageTitle : "All Da Rhymes :: Karaoke Flow",
                 rhymes: rhymes,
-                admin: true,
-                allLists : true // shows lists of rhymes/flows/stats nav if true
+                admin: admin,
+                loggedIn : loggedIn
             };
             response.render('rhymes_edit.html', templateData);
         });
     },
 
     editRhyme: function(request, response) {
+        if (request.user) { admin = true; } else { admin = false; }
         db.Rhyme.findOne({ rhymeID: request.params.rhymeID }, function (err, rhymes) {
 
             if (err) {
@@ -81,11 +94,14 @@ module.exports = {
                 console.log("something went wrong");
             }
 
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
             templateData = {
                 pageTitle : "All Da Rhymes :: Karaoke Flow",
                 rhymes: rhymes,
-                admin: true,
-                allLists : true // shows lists of rhymes/flows/stats nav if true
+                admin: admin,
+                loggedIn : loggedIn
             };
             response.partial('rhyme_single_edit.html', templateData);
         });
@@ -130,7 +146,8 @@ module.exports = {
     },
 
     // some basic stats to edit for the KF site
-    stats: function(request, response) {
+    editStats: function(request, response) {
+        if (request.user) { admin = true; } else { admin = false; }
         db.FlowStat.findOne({ flowStatsID: 0 }, function (err, stats) {
 
             if (err) {
@@ -138,13 +155,16 @@ module.exports = {
                 console.log("something went wrong");
             }
 
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
             templateData = {
                 pageTitle : "Statistics :: Karaoke Flow",
                 stats : stats,
-                admin : true,
-                allLists : true // shows lists of rhymes/flows/stats nav if true
+                admin : admin,
+                loggedIn : loggedIn
             };
-            response.render('stats.html', templateData);
+            response.render('stats_edit.html', templateData);
         });
     }
 

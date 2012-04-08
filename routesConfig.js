@@ -47,13 +47,16 @@ module.exports = function(app) {
     // app.get exists too
     app.post('/create/:flowID', mainRoute.createFlowIDPOST);
 
+    app.get('/perform/random', mainRoute.performRandom); // flow of random rhymes
     app.get('/perform/:flowID', mainRoute.performFlowID); // karaoke performance page
     app.get('/about', mainRoute.about);
 
 
 
     // ROUTES: show.js
+    app.get('/flows', showRoute.showFlows);
     app.get("/rhymes", showRoute.showRhymes);
+    app.get('/stats', showRoute.showStats);
 
 
 
@@ -63,7 +66,7 @@ module.exports = function(app) {
     app.get("/rhymes/edit", ensureAuthenticated, adminRoute.editAllRhymes);
     app.get("/rhymes/:rhymeID/edit", ensureAuthenticated, adminRoute.editRhyme);
     app.post("/rhymes/update", ensureAuthenticated, adminRoute.updateRhyme);
-    app.get("/stats", ensureAuthenticated, adminRoute.stats);
+    app.get("/stats/edit", ensureAuthenticated, adminRoute.editStats);
 
 
 
