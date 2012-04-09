@@ -78,9 +78,8 @@ TIPS: Press 'j' to highlight next line, 'k' to highlight previous line.
 <%
 lineCounter = 0;
 currentLine = 0;
-rhymes2 = rhymes.split(",");
-for (var i=0; i<rhymes2.length; i++) {
-	var rhymesSplit = rhymes2[i].split("|");
+for (var i=0; i<rhymes.length; i++) {
+	var rhymesSplit = rhymes[i].split(/[,|]+/);
 	for (var j=0; j<rhymesSplit.length; j++) {
 %>
 <SPAN TITLE="<%= lineCounter %>" ID="line<%= lineCounter %>" CLASS="<% if (lineCounter == currentLine || lineCounter == 0) { %>lyricsCurrent<% } else if (lineCounter == currentLine - 1 || lineCounter == currentLine + 1) { %>lyricsNeighbor<% } %>"><%= rhymesSplit[j] %></SPAN><BR />
