@@ -21,19 +21,6 @@
 <DIV CLASS="headfoot" ID="header">
 <TABLE BORDER=0 WIDTH="100%"><TR><TD VALIGN="top" ALIGN="center" WIDTH="40%">
 <DIV ID="karaokeFlow" STYLE="line-height: 0.8em;"><A HREF="/">Karaoke Flow</A></DIV>
-<% if (admin == true) { %>
-<DIV ID="adminHeader"><CENTER>[ ADMIN: 
-<A HREF="/flows/edit">all flows</A>
-| <A HREF="/rhymes/edit">all rhymes</A>
-| <A HREF="/stats/edit">stats</A> <!-- TODO: make this work -->
-]</CENTER></DIV>
-<% } %>
-
-<DIV ID="adminHeader"><CENTER>[ LISTS: 
-<A HREF="/flows">all flows</A>
-| <A HREF="/rhymes">all rhymes</A>
-| <A HREF="/stats">stats</A>
-]</CENTER></DIV>
 
 </TD><TD VALIGN="middle" ALIGN="center" STYLE="line-height: 1.7em;">
 <CENTER>this dope flow is called:<BR />
@@ -78,13 +65,10 @@ TIPS: Press 'j' to highlight next line, 'k' to highlight previous line.
 <%
 lineCounter = 0;
 currentLine = 0;
-for (var i=0; i<rhymes.length; i++) {
-	var rhymesSplit = rhymes[i].split(/[,\|]+/);
 	for (var j=0; j<rhymesSplit.length; j++) {
 %>
 <SPAN TITLE="<%= lineCounter %>" ID="line<%= lineCounter %>" CLASS="<% if (lineCounter == currentLine || lineCounter == 0) { %>lyricsCurrent<% } else if (lineCounter == currentLine - 1 || lineCounter == currentLine + 1) { %>lyricsNeighbor<% } %>"><%= rhymesSplit[j] %></SPAN><BR />
 <% lineCounter++; } %>
-<% } %>
 
 </DIV> <!-- /lyrics -->
 

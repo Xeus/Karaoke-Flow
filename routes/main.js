@@ -309,6 +309,9 @@ module.exports = {
                     rhymes = "[no rhymes entered]";
                 }
 
+                var rhymes2 = rhymes.toString();
+                var rhymesSplit = rhymes2.split(/[,\|]/);
+
                 var beats = ['drake_onone', 'wizkhalifa_sots', '36mafia_hard'];
                 var randomBeat = Math.floor(Math.random() * beats.length);
 
@@ -318,7 +321,7 @@ module.exports = {
                 var flowData = {
                     flowName : flow.name,
                     pageTitle : "Step #2: Perform da Rhymes :: Karaoke Flow",
-                    rhymes : rhymes,
+                    rhymesSplit : rhymesSplit,
                     admin : false,
                     randomBeat : randomBeat,
                     beats : beats,
@@ -346,14 +349,19 @@ module.exports = {
             else {
                 var numRhymes = 10;
                 var randomRhymes = '';
-                // don't want to look for more random rhymes than db actually has
-                if (rhymes.length < numRhymes) { numRhymes = rhymes.length; }
-                for (var i=0; i<numRhymes; i++) {
-                    randomRhymes += rhymes[i].body;
-                }
+                
                 if (rhymes == undefined || rhymes == null) {
                     rhymes = "[no rhymes entered]";
                 }
+                // don't want to look for more random rhymes than db actually has
+                if (rhymes.length < numRhymes) { numRhymes = rhymes.length; }
+                for (var i=0; i<numRhymes; i++) {
+                    var randomRhymeNum = Math.floor(Math.random() * numRhymes);
+                    randomRhymes += rhymes[randomRhymeNum].body + ",";
+                }
+
+                var rhymes2 = randomRhymes.toString();
+                var rhymesSplit = rhymes2.split(/[,\|]/);
 
                 var beats = ['drake_onone', 'wizkhalifa_sots', '36mafia_hard'];
                 var randomBeat = Math.floor(Math.random() * beats.length);
@@ -364,7 +372,7 @@ module.exports = {
                 var rhymeData = {
                     flowName : "da illest random flow",
                     pageTitle : "Step #2: Perform da Random Rhymes :: Karaoke Flow",
-                    rhymes : randomRhymes,
+                    rhymesSplit : rhymesSplit,
                     admin : false,
                     randomBeat : randomBeat,
                     beats : beats,
