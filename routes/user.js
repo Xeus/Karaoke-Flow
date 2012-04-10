@@ -58,19 +58,21 @@ module.exports = {
         // will show admin nav edit links if logged in
         if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
         
-        templateData = {
-             message: request.flash('error')[0], // get error message is received from prior login attempt
-             redirect : request.flash("redirect"),
-             loggedIn : loggedIn,
-             admin : false,
-             solo : false
-        }
-        
         if (request.xhr) {
+            templateData = {
+                message: request.flash('error')[0], // get error message if received from prior login attempt
+                redirect : request.flash("redirect"),
+                loggedIn : loggedIn,
+                admin : false,
+                solo : false
+            }
+
             response.partial('login.html', templateData);
         }
         else {
             templateData = {
+                message: request.flash('error')[0], // get error message if received from prior login attempt
+                redirect : request.flash("redirect"),
                 loggedIn : false,
                 admin : false,
                 solo : true

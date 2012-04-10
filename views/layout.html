@@ -41,10 +41,10 @@
 <A HREF="/flows/edit">edit flows</A>
 | <A HREF="/rhymes/edit">edit rhymes</A>
 | <A HREF="/stats/edit">edit stats</A> <!-- TODO: make this work -->
-| <A HREF="/logoff">logoff</A>
+| <A HREF="/logout">logout</A>
 ]</SPAN>
 <% } else { %>
-<BR />[ ADMIN: <A HREF="/register">register</A> | <A HREF="" ID="adminLogin">login</A> ]
+<BR />[ ADMIN: <A HREF="/register">register</A> | <A HREF="#" ID="adminLogin">login</A> ]
 <% } %>
 
 <BR /><BR /><SPAN ID="adminHeader"></SPAN>
@@ -55,9 +55,10 @@
 <SCRIPT TYPE="text/javascript">
 
 $(function() {
-	$("#adminLogin").click(function() {
+	$("#adminLogin").click(function(e) {
 		$("#adminHeader").load("/login");
 		return false;
+		e.preventDefault();
 	});
 });
 </SCRIPT>

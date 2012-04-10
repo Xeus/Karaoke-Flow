@@ -10,7 +10,8 @@ var express = require('express'),
     ejs = require('ejs'), // https://github.com/visionmedia/ejs
     routes = require('./routesConfig'),
     DB = require('./accessDB').AccessDB,
-    mongoStore = require('connect-mongodb');
+    mongoStore = require('connect-mongodb'),
+    _ = require("underscore");
 
 var app = module.exports = express.createServer(express.logger());
 global.app = app;

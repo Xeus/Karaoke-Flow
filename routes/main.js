@@ -1,6 +1,7 @@
 
 /* Module dependencies. */
 var db = require('../accessDB');
+var _ = require('underscore');
 
 module.exports = {
 
@@ -349,6 +350,11 @@ module.exports = {
             else {
                 var numRhymes = 10;
                 var randomRhymes = '';
+                var usedRhymes = [];
+
+                var randomRhymeGen = function() {
+                    return Math.floor(Math.random() * numRhymes);
+                }
                 
                 if (rhymes == undefined || rhymes == null) {
                     rhymes = "[no rhymes entered]";
@@ -356,8 +362,17 @@ module.exports = {
                 // don't want to look for more random rhymes than db actually has
                 if (rhymes.length < numRhymes) { numRhymes = rhymes.length; }
                 for (var i=0; i<numRhymes; i++) {
-                    var randomRhymeNum = Math.floor(Math.random() * numRhymes);
-                    randomRhymes += rhymes[randomRhymeNum].body + ",";
+                    var rhymeLoop = false;
+                    while (rhymeLoop == false) {
+                        var randomRhymeNum = randomRhymeGen();
+                        if (_.indexOf(usedRhymes, randomRhymeNum) == -1 && rhymes[randomRhymeNum] != undefined) {
+                            randomRhymes += rhymes[randomRhymeNum].body + ",";
+                            usedRhymes.push(randomRhymeNum);
+                        }
+                        else {
+                            rhymeLoop = true;
+                        }
+                    }
                 }
 
                 var rhymes2 = randomRhymes.toString();

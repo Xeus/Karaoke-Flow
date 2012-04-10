@@ -166,6 +166,25 @@ module.exports = {
             };
             response.render('stats_edit.html', templateData);
         });
+    },
+
+    deleteRhyme: function(request, response) {
+        console.log("firedx2");
+        if (request.user) { admin = true; } else { admin = false; }
+        db.Rhyme.findOne({ rhymeID : request.params.numRhyme }, function (err, delRhyme) {
+
+            if (err) {
+                //an error occurred
+                console.log("something went wrong");
+            }
+            else {
+                db.Rhyme.remove({ "rhymeID" : delRhyme.rhymeID }, function (err, success) { if (err) {console.log("nope");} else { console.log('yep');} });
+                db.FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : -1 } } );
+                response.json({status: 'OK'});
+            }
+        
+        });
     }
+
 
 };

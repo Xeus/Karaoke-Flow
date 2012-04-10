@@ -52,7 +52,6 @@ module.exports = function(app) {
     app.get('/about', mainRoute.about);
 
 
-
     // ROUTES: show.js
     app.get('/flows', showRoute.showFlows);
     app.get("/rhymes", showRoute.showRhymes);
@@ -67,6 +66,7 @@ module.exports = function(app) {
     app.get("/rhymes/:rhymeID/edit", ensureAuthenticated, adminRoute.editRhyme);
     app.post("/rhymes/update", ensureAuthenticated, adminRoute.updateRhyme);
     app.get("/stats/edit", ensureAuthenticated, adminRoute.editStats);
+    app.post('/delete/:numRhyme', adminRoute.deleteRhyme);
 
 
 

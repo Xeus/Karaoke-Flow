@@ -8,25 +8,27 @@
 
 <!-- creates a new form for each rhyme to be edited -->
 <% for (var i=0; i<rhymes.length; i++) { %>
-<FORM NAME="rhymeForm<%= i %>" ID="rhymeForm<%= i %>" METHOD="post" ACTION="/rhymes/update">
+<SPAN ID="span<%= rhymes[i].rhymeID %>">
+<FORM NAME="rhymeForm<%= rhymes[i].rhymeID %>" ID="rhymeForm<%= rhymes[i].rhymeID %>" METHOD="post" ACTION="/rhymes/update">
 <INPUT TYPE="hidden" NAME="rhymeID" VALUE="<%= rhymes[i].rhymeID %>" />
 <TABLE BORDER=0>
 <TR><TD ALIGN="right" VALIGN="middle">rhyme/s</TD>
-<TD><TEXTAREA NAME="rhymeBody" ID="rhyme<%= i %>Body" ROWS=3 COLS=40 CLASS="edit text ui-widget-content ui-corner-all" SIZE=40><%= rhymes[i].body %></TEXTAREA></TD></TR>
+<TD><TEXTAREA NAME="rhymeBody" ID="rhyme<%= rhymes[i].rhymeID %>Body" ROWS=3 COLS=40 CLASS="edit text ui-widget-content ui-corner-all" SIZE=40><%= rhymes[i].body %></TEXTAREA></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhyme<%= i %>Topic1" VALUE="<%= rhymes[i].topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeTopic1" ID="rhyme<%= rhymes[i].rhymeID %>Topic1" VALUE="<%= rhymes[i].topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
-<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhyme<%= i %>Topic2" VALUE="<%= rhymes[i].topic2 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeTopic2" ID="rhyme<%= rhymes[i].rhymeID %>Topic2" VALUE="<%= rhymes[i].topic2 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">date</TD>
-<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhyme<%= i %>Date" READONLY="true" VALUE="<%= rhymes[i].date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+<TD><INPUT TYPE="text" NAME="rhymeDate" ID="rhyme<%= rhymes[i].rhymeID %>Date" READONLY="true" VALUE="<%= rhymes[i].date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
 </TABLE>
 
-<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme<%= i %>" VALUE="update dis rhyme!" CLASS="glow text ui-widget-content ui-corner-all" STYLE="font-size: 17pt;" />
+<INPUT NAME="updateRhyme" TYPE="submit" ID="updateRhyme<%= i %>" VALUE="update dis rhyme!" CLASS="glow text ui-widget-content ui-corner-all" STYLE="font-size: 17pt;" /></FORM>
+<button id="delete<%= rhymes[i].rhymeID %>" CLASS="glow text ui-widget-content ui-corner-all">delete</button>
 
 <!-- DIV confirms successful AJAX post msg -->
-<DIV ID="updated<%= i %>" CLASS="text ui-widget-content ui-corner-all" STYLE="display: none; background: yellow;"></DIV>
-
-</FORM><BR /><HR NOSHADE SIZE=1 COLOR="black"><BR />
+<DIV ID="updated<%= rhymes[i].rhymeID %>" CLASS="text ui-widget-content ui-corner-all" STYLE="display: none; background: yellow;"></DIV>
+</SPAN>
+<BR /><HR NOSHADE SIZE=1 COLOR="black"><BR />
 <% } %>
 
 </CENTER>
@@ -38,19 +40,19 @@
 $(function() {
 // loops through all rhymes and gives them click handlers
 <% for (var i=0; i<rhymes.length; i++) { %>
-	$('#updateRhyme<%= i %>').click(function(e) {
+	$('#updateRhyme<%= rhymes[i].rhymeID %>').click(function(e) {
 		console.log("Fired");
-		formData<%= i %> = $('#rhymeForm<%= i %>').serialize();
+		formData<%= rhymes[i].rhymeID %> = $('#rhymeForm<%= rhymes[i].rhymeID %>').serialize();
 		$.ajax({
 			url: "/rhymes/update",
 			type: "POST",
-			data: formData<%= i %>,
+			data: formData<%= rhymes[i].rhymeID %>,
 			dataType: "json",
 			success: function(response) {
 				if (response.status == "OK") {
                     console.log("Rhyme modified successfully, let's display it.");
-                    $("#updated<%= i %>").html("Updated!");
-                    $("#updated<%= i %>").css("display", "block");
+                    $("#updated<%= rhymes[i].rhymeID %>").html("Updated!");
+                    $("#updated<%= rhymes[i].rhymeID %>").css("display", "block");
                 }
             }, 
             error : function(error) {
@@ -59,6 +61,25 @@ $(function() {
             }
 		});
 		e.preventDefault();
+		return false;
+	});
+	$("#delete<%= rhymes[i].rhymeID %>").click(function() {
+		console.log("fired");
+		$.ajax({
+			url : '/delete/<%= rhymes[i].rhymeID %>',
+            type : 'POST',
+            
+            success : function(response) {
+                if (response.status == "OK") {
+                    console.log("deleted");
+                    $("#span<%= rhymes[i].rhymeID %>").html('<DIV>[ Rhyme deleted. ]</DIV>');
+                }
+            }, 
+            error : function(error) {
+                console.log("There was an error deleting a rhyme.");
+                console.log(error);
+            }
+		});
 		return false;
 	});
 <% } %>
