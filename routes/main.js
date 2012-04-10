@@ -268,7 +268,7 @@ module.exports = {
                 rhymesJoined.replace(",",", ");
 
                 db.FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : 1 } } );
-                db.Flow.findOne({ flowID : request.params.flowID }).update({ $push : { compiledFlow : rhymesJoined, topic1 : request.body.topic1, topic2 : request.body.topic2 } });
+                db.Flow.findOne({ flowID : request.params.flowID }).update({ $push : { compiledFlow : rhymesJoined } }).update({ topic1 : request.body.topic1, topic2 : request.body.topic2 });
 
                 // will show admin nav edit links if logged in
                 if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
