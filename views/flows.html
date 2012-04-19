@@ -7,7 +7,7 @@
 <UL>
 <!-- need to refresh this upon AJAX refresh -->
 <% for (var i=0; i<flows.length; i++) { %>
-<LI><DIV CLASS="showRhymes" ID="flow<%= i %>" TITLE="(topic #1: <%= flows[i].topic1 %>, topic #2: <%= flows[i].topic2 %>, date: <%= flows[i].date %>"><%= flows[i].compiledFlow %> <SPAN STYLE="font-size: 8pt; font-family: Arial;">[ <A HREF="" onClick="toggleEdit(<%= i %>, <%= flows[i].flowID %>); return false;" ID="flowLink<%= i %>">edit</A> ]</SPAN>
+<LI><DIV CLASS="showRhymes" ID="flow<%= i %>" TITLE="(topic #1: <%= flows[i].topic1 %>, topic #2: <%= flows[i].topic2 %>, date: <%= flows[i].date %>"><%= flows[i].compiledFlow %> <!-- <SPAN STYLE="font-size: 8pt; font-family: Arial;">[ <A HREF="" onClick="toggleEdit(<%= i %>, <%= flows[i].flowID %>); return false;" ID="flowLink<%= i %>">edit</A> ]</SPAN> -->
 <DIV ID="flowContents<%= i %>" STYLE="display: none;">hi</DIV>
 </DIV></LI>
 <% } %>
@@ -30,6 +30,7 @@ var toggleEdit = function(i, flowID) {
 			$("#flow"+i).css("border-width", "0px");
 		}
 		$("#flowContents" + i).toggle();
+		return false;
 }
 
 $(function() {

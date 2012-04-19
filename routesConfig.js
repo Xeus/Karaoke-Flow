@@ -60,7 +60,8 @@ module.exports = function(app) {
 
 
     // ROUTES: admin.js
-    app.get("/flows/edit", ensureAuthenticated, adminRoute.editFlow);
+    app.get("/flows/edit", ensureAuthenticated, adminRoute.editAllFlows);
+    app.get("/flows/:flowID/edit", ensureAuthenticated, adminRoute.editFlow);
     app.get("/flows/update/:flowID", ensureAuthenticated, adminRoute.updateFlow);
     app.get("/rhymes/edit", ensureAuthenticated, adminRoute.editAllRhymes);
     app.get("/rhymes/:rhymeID/edit", ensureAuthenticated, adminRoute.editRhyme);

@@ -7,7 +7,7 @@
 <UL>
 <!-- need to refresh this upon AJAX refresh -->
 <% for (var i=0; i<rhymes.length; i++) { %>
-<LI><DIV CLASS="showRhymes" ID="rhyme<%= i %>" TITLE="(topic #1: <%= rhymes[i].topic1 %>, topic #2: <%= rhymes[i].topic2 %>, date: <%= rhymes[i].date %>"><%= rhymes[i].body %> <SPAN STYLE="font-size: 8pt; font-family: Arial;">[ <A HREF="" onClick="toggleEdit(<%= i %>, <%= rhymes[i].rhymeID %>); return false;" ID="rhymeLink<%= i %>">edit</A> ]</SPAN>
+<LI><DIV CLASS="showRhymes" ID="rhyme<%= i %>" TITLE="(topic #1: <%= rhymes[i].topic1 %>, topic #2: <%= rhymes[i].topic2 %>, date: <%= rhymes[i].date %>"><%= rhymes[i].body %> <!-- <SPAN STYLE="font-size: 8pt; font-family: Arial;">[ <A HREF="" onClick="toggleEdit(<%= i %>, <%= rhymes[i].rhymeID %>); return false;" ID="rhymeLink<%= i %>">edit</A> ]</SPAN> -->
 <DIV ID="rhymeContents<%= i %>" STYLE="display: none;">hi</DIV>
 </DIV></LI>
 <% } %>

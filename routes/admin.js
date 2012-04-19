@@ -7,7 +7,7 @@ module.exports = {
     // ******** ADMIN STUFF *************
     // admin stuff all below
 
-    editFlow: function(request, response) {
+    editAllFlows: function(request, response) {
         if (request.user) { admin = true; } else { admin = false; }
         db.Flow.find({}, function (err, flows) {
 
@@ -26,6 +26,28 @@ module.exports = {
                 loggedIn : loggedIn
             };
             response.render('flows_edit.html', templateData);
+        });
+    },
+
+    editFlow: function(request, response) {
+        if (request.user) { admin = true; } else { admin = false; }
+        db.Flow.findOne({ flowID: request.params.flowID }, function (err, flows) {
+
+            if (err) {
+                //an error occurred
+                console.log("something went wrong");
+            }
+
+            // will show admin nav edit links if logged in
+            if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
+
+            templateData = {
+                pageTitle : "All Da Flows :: Karaoke Flow",
+                flows : flows,
+                admin: admin,
+                loggedIn : loggedIn
+            };
+            response.partial('flow_single_edit.html', templateData);
         });
     },
 

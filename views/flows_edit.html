@@ -7,22 +7,22 @@
 <CENTER>
 
 <% for (var i=0; i<flows.length; i++) { %>
-<FORM NAME="flowForm<%= i %>" ID="flowForm<%= i %>" METHOD="post" ACTION="/flows/update">
-<INPUT TYPE="hidden" NAME="flowID<%= i %>" VALUE="<%= flows[i].flowID %>" />
+<FORM NAME="flowForm<%= flows[i].flowID %>" ID="flowForm<%= flows[i].flowID %>" METHOD="post" ACTION="/flows/update">
+<INPUT TYPE="hidden" NAME="flowID<%= flows[i].flowID %>" VALUE="<%= flows[i].flowID %>" />
 <TABLE BORDER=0>
 <TR><TD ALIGN="right" VALIGN="middle">flow rhymes</TD>
-<TD><INPUT TYPE="text" NAME="flowBody" ID="flow<%= i %>Body" VALUE="<%= flows[i].name %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
+<TD><INPUT TYPE="text" NAME="flowBody" ID="flow<%= flows[i].flowID %>Body" VALUE="<%= flows[i].name %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=40 /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
-<TD><INPUT TYPE="text" NAME="flowTopic1" ID="flow<%= i %>Topic1" VALUE="<%= flows[i].topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
+<TD><INPUT TYPE="text" NAME="flowTopic1" ID="flow<%= flows[i].flowID %>Topic1" VALUE="<%= flows[i].topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
 <TD><INPUT TYPE="text" NAME="flowTopic2" ID="flow<%= i %>Topic2" VALUE="<%= flows[i].topic2 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">date</TD>
-<TD><INPUT TYPE="text" NAME="flowDate" ID="flow<%= i %>Date" READONLY="<%= flows[i].date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+<TD><INPUT TYPE="text" NAME="flowDate" ID="flow<%= flows[i].flowID %>Date" READONLY="<%= flows[i].date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
 <TR><TD ALIGN="right" VALIGN="middle">compiled flow</TD>
-<TD><TEXTAREA NAME="flowCompiled" ID="flow<%= i %>Compiled" CLASS="edit text ui-widget-content ui-corner-all" ROWS=4 COLS=40><%= flows[i].compiledFlow %></TEXTAREA></TD></TR>
+<TD><TEXTAREA NAME="flowCompiled" ID="flow<%= flows[i].flowID %>Compiled" CLASS="edit text ui-widget-content ui-corner-all" ROWS=4 COLS=40><%= flows[i].compiledFlow %></TEXTAREA></TD></TR>
 </TABLE>
 
-<INPUT NAME="updateFlow<%= i %>" TYPE="submit" ID="updateFlow<%= i %>" VALUE="update dis flow!" CLASS="glow" STYLE="font-size: 17pt;" />
+<INPUT NAME="updateFlow<%= flows[i].flowID %>" TYPE="submit" ID="updateFlow<%= flows[i].flowID %>" VALUE="update dis flow!" CLASS="glow" STYLE="font-size: 17pt;" />
 
 </FORM><BR /><HR NOSHADE SIZE=1 COLOR="black"><BR />
 <% } %>

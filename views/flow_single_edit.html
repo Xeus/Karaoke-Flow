@@ -1,0 +1,58 @@
+<TABLE ID="bodyTable"><TR><TD VALIGN="top" STYLE="background: ;">
+
+<CENTER>
+
+<FORM NAME="flowForm" ID="flowForm" METHOD="post" ACTION="/flows/update">
+<INPUT TYPE="hidden" NAME="flowID" VALUE="<%= flows.flowID %>" />
+<TABLE BORDER=0 CLASS="flowSingle">
+<TR><TD ALIGN="right" VALIGN="middle">flow/s</TD>
+<TD><TEXTAREA NAME="flowBody" ID="flowBody" CLASS="edit text ui-widget-content ui-corner-all" ROWS=3 COLS=40><%= flows.compiledFlow %></TEXTAREA></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">topic #1</TD>
+<TD><INPUT TYPE="text" NAME="flowTopic1" ID="flowTopic1" VALUE="<%= flows.topic1 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">topic #2</TD>
+<TD><INPUT TYPE="text" NAME="flowTopic2" ID="flowTopic2" VALUE="<%= flows.topic2 %>" CLASS="edit text ui-widget-content ui-corner-all" /></TD></TR>
+<TR><TD ALIGN="right" VALIGN="middle">date</TD>
+<TD><INPUT TYPE="text" NAME="flowDate" ID="flowDate" READONLY="true" VALUE="<%= flows.date %>" CLASS="edit text ui-widget-content ui-corner-all" SIZE=35 /></TD></TR>
+</TABLE>
+
+<INPUT NAME="updateflow" TYPE="submit" ID="updateflow" VALUE="update dis flow!" CLASS="glow text ui-widget-content ui-corner-all" STYLE="font-size: 17pt;" />
+
+<!-- DIV confirms successful AJAX post msg -->
+<DIV ID="updated" CLASS="text ui-widget-content ui-corner-all" STYLE="display: none; background: yellow;"></DIV>
+
+</FORM>
+
+</CENTER>
+
+</TD></TR></TABLE> <!-- /bodyTable -->
+
+<script type="text/javascript">
+
+$(function() {
+// loops through all flows and gives them click handlers
+	$('#updateflow').click(function(e) {
+		console.log("Fired");
+		formData = $('#flowForm').serialize();
+		$.ajax({
+			url: "/flows/update",
+			type: "POST",
+			data: formData,
+			dataType: "json",
+			success: function(response) {
+				if (response.status == "OK") {
+                    console.log("flow modified successfully, let's display it.");
+                    $("#updated").html("Updated!");
+                    $("#updated").css("display", "block");
+                }
+            }, 
+            error : function(error) {
+                console.log("There was an error updating the flow.");
+                console.log(error);
+            }
+		});
+		e.preventDefault();
+		return false;
+	});
+});
+
+</script>
