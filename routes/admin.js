@@ -7,6 +7,7 @@ module.exports = {
     // ******** ADMIN STUFF *************
     // admin stuff all below
 
+    // lets you view and edit all flows at once
     editAllFlows: function(request, response) {
         if (request.user) { admin = true; } else { admin = false; }
         db.Flow.find({}, function (err, flows) {
@@ -29,6 +30,7 @@ module.exports = {
         });
     },
 
+    // edit one flow via ajax
     editFlow: function(request, response) {
         if (request.user) { admin = true; } else { admin = false; }
         db.Flow.findOne({ flowID: request.params.flowID }, function (err, flows) {
@@ -51,7 +53,7 @@ module.exports = {
         });
     },
 
-    // TODO: make this functional
+    // updates one flow via ajax
     updateFlow: function(request, response) {
         if (request.user) { admin = true; } else { admin = false; }
         var requestedFlowID = request.params.flowID;
@@ -85,6 +87,7 @@ module.exports = {
 
     },
 
+    // view and edit all rhymes at once
     editAllRhymes: function(request, response) {
         if (request.user) { admin = true; } else { admin = false; }
         db.Rhyme.find({}, function (err, rhymes) {
@@ -107,6 +110,7 @@ module.exports = {
         });
     },
 
+    // view one rhyme via ajax
     editRhyme: function(request, response) {
         if (request.user) { admin = true; } else { admin = false; }
         db.Rhyme.findOne({ rhymeID: request.params.rhymeID }, function (err, rhymes) {
@@ -129,6 +133,7 @@ module.exports = {
         });
     },
 
+    // edit and update one rhyme via ajax
     updateRhyme: function(request, response){
         var rhymeID = request.body.rhymeID;
         var condition = { rhymeID: rhymeID };
@@ -155,7 +160,7 @@ module.exports = {
 
                 //redirect the user to the update page - append ?update=true to URL
                 response.json({
-                    status :'OK'
+                    status : 'OK'
                 });
             }
             else {
@@ -201,8 +206,9 @@ module.exports = {
             }
             else {
                 db.Rhyme.remove({ "rhymeID" : delRhyme.rhymeID }, function (err, success) { if (err) {console.log("nope");} else { console.log('yep');} });
+                // important to keep the count right too
                 db.FlowStat.findOne({ flowStatsID : 0 }).update( { $inc: { rhymeCount : -1 } } );
-                response.json({status: 'OK'});
+                response.json({ status : 'OK' });
             }
         
         });

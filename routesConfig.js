@@ -34,18 +34,15 @@ module.exports = function(app) {
     // make default id / fix flow count
     // count() won't work
     app.get('/create', mainRoute.createGET);
-    // check if room actually exists?  redirects?
+    // TODO: check if room actually exists?  redirects?
     app.post('/create', mainRoute.createPOST);
 
     /* some weird thing where it does /create/0 twice, but flowCount
      * is correct in the FlowStat schema */
-    // creates new room
-    app.post('/createnew', mainRoute.createNew);
+    app.post('/createnew', mainRoute.createNew); // creates new room
 
-    // app.post exists too
-    app.get('/create/:flowID', mainRoute.createFlowIDGET);
-    // app.get exists too
-    app.post('/create/:flowID', mainRoute.createFlowIDPOST);
+    app.get('/create/:flowID', mainRoute.createFlowIDGET); // !! app.post exists too
+    app.post('/create/:flowID', mainRoute.createFlowIDPOST); // !! app.get exists too
 
     app.get('/perform/random', mainRoute.performRandom); // flow of random rhymes
     app.get('/perform/:flowID', mainRoute.performFlowID); // karaoke performance page
@@ -79,38 +76,25 @@ module.exports = function(app) {
 
 
     // ROUTES: user.js
-    
-    // Register User - display page
-    app.get('/register', userRoute.getRegister);
-    
-    //Register User - receive registration post form
-    app.post('/register', userRoute.postRegister);
-    
-    // Display login page
-    app.get('/login', userRoute.login);
-    
+    app.get('/register', userRoute.getRegister); // Register User - display page
+    app.post('/register', userRoute.postRegister); //Register User - receive registration post form
+    app.get('/login', userRoute.login); // Display login page
     // Login attempted POST on '/local'
     // Passport.authenticate with local email and password, if fails redirect back to GET /login
     // If successful, redirect to /account
     app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-    function(request, response) {
-        if (request.param('redirect') != "") {
-            //redirect to page that initiated Login request
-            response.redirect( request.param('redirect') );
-        } else {
-            response.redirect('/account');
-        }
-        //response.redirect('/account');
+        function(request, response) {
+            if (request.param('redirect') != "") {
+                //redirect to page that initiated Login request
+                response.redirect( request.param('redirect') );
+            } else {
+                response.redirect('/account');
+            }
+            //response.redirect('/account');
     });
-    
-    // Display account page
-    app.get('/account', ensureAuthenticated, userRoute.getAccount);
-
+    app.get('/account', ensureAuthenticated, userRoute.getAccount); // Display account page
     app.post('/account/changepassword', ensureAuthenticated, userRoute.postChangePassword),
-    
-    // Logout user
-    app.get('/logout', userRoute.logout);
-
+    app.get('/logout', userRoute.logout); // Logout user
     app.get('/getusers', userRoute.getUsers);
 
 }

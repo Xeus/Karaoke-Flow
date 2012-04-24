@@ -152,6 +152,8 @@ module.exports = {
         flowNumber = flowArray.length - 1;
         */
 
+        // 2 random topics picked, also see array in createFlowIDPOST
+        // TODO: make topics global?
         var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
 
         // returns number reference, use with array topics to get actual string result
@@ -215,6 +217,7 @@ module.exports = {
         flowNumber = flowArray.length - 1;
         */
 
+        // 2 random topics picked from this array
         var topics = new Array('basketball', 'fame', 'football', 'women', 'riches', 'violence', 'nyc','oakland', 'cops', 'federal govt', 'mom', 'dad', 'swag', 'tennis', 'twitter', 'skype', 'champagne', 'itp');
 
         getRandomTopic = function() { return Math.floor(Math.random() * topics.length); };
@@ -239,6 +242,7 @@ module.exports = {
                 console.log("currentTime: " + currentTime.valueOf());
                 var timeRemaining = Math.floor((endTime - currentTime.valueOf()) / 1000);
 
+                // embedded query to update rhyme count and save new rhymes
                 db.FlowStat.findOne({ flowStatsID: 0 }, function(err, getRhymeCount) {
                     var nextRhymeCount = getRhymeCount.rhymeCount+1;
                     var rhymesTemp = request.body.rhyme;
@@ -257,12 +261,12 @@ module.exports = {
 
                 });
             
-                // TODO: is it saving to db?
                 var flowData = {
                     topic1 : request.body.topic1,
                     topic2 : request.body.topic2
                 };
 
+                // formats strings for db
                 var rhymesTemp = request.body.rhyme;
                 var rhymesJoined = rhymesTemp.join("|");
                 rhymesJoined.replace(",",", ");
@@ -294,6 +298,7 @@ module.exports = {
 
         },
 
+    // performs a specifically built flow
     performFlowID: function(request, response) {
 
         db.Flow.findOne({ flowID : request.params.flowID }, function(err,flow) {
@@ -310,9 +315,11 @@ module.exports = {
                     rhymes = "[no rhymes entered]";
                 }
 
+                // seps all rhymes by , and |
                 var rhymes2 = rhymes.toString();
                 var rhymesSplit = rhymes2.split(/[,\|]/);
 
+                // random beat picked, refs sound files in /static
                 var beats = ['drake_onone', 'wizkhalifa_sots', '36mafia_hard'];
                 var randomBeat = Math.floor(Math.random() * beats.length);
 
@@ -338,6 +345,7 @@ module.exports = {
 
     },
 
+    // performs random flow for quick karaoke action
     performRandom: function(request, response) {
 
         db.Rhyme.find({}, function(err, rhymes) {
@@ -359,7 +367,9 @@ module.exports = {
                 if (rhymes == undefined || rhymes == null) {
                     rhymes = "[no rhymes entered]";
                 }
+
                 // don't want to look for more random rhymes than db actually has
+                // also makes sure same rhyme not picked twice
                 if (rhymes.length < numRhymes) { numRhymes = rhymes.length; }
                 for (var i=0; i<numRhymes; i++) {
                     var rhymeLoop = false;
@@ -375,9 +385,12 @@ module.exports = {
                     }
                 }
 
+                // this splits up all rhymes (separate, together)
+                // using , and | as delimiters
                 var rhymes2 = randomRhymes.toString();
                 var rhymesSplit = rhymes2.split(/[,\|]/);
 
+                // references sound files, picks at random
                 var beats = ['drake_onone', 'wizkhalifa_sots', '36mafia_hard'];
                 var randomBeat = Math.floor(Math.random() * beats.length);
 

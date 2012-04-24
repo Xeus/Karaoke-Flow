@@ -1,3 +1,5 @@
+// not used in new version, see /models
+
 module.exports.configureSchema = function(Schema, mongoose) {
 	var Rhyme = new Schema({ 
 		body : String,
