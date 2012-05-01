@@ -277,6 +277,7 @@ module.exports = {
                 // will show admin nav edit links if logged in
                 if (request.user) { var loggedIn = true; } else { var loggedIn = false; }
 
+                // TODO: when adding rhymes to flow, it dupes topics
                 var templateData = {
                     pageTitle : "Step #2: Create da Rhymes :: Karaoke Flow",
                     randomTopic1 : request.body.topic1,
