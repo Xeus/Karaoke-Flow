@@ -1,6 +1,6 @@
 # Karaoke Flow
 
-by Ben Turner ([@Xeus][http://twitter.com/Xeus])
+by Ben Turner ([@Xeus](http://twitter.com/Xeus))
 
 - Demo: http://karaokeflow.herokuapp.com/
 - Github: https://github.com/Xeus/Karaoke-Flow
@@ -39,22 +39,20 @@ Connect to http://localhost:5000 to get your flow started!  Or see an online dem
 
 package.json:
 
-	{
-  	"name": "Karaoke-Flow",
-  	"version": "0.8.0",
-  	"dependencies": {
-      "express": "2.5.6",
-      "ejs": "latest",
-      "mongoose" : "2.5.6",
-      "request" : "latest",
-      "express": "2.5.8",
-      "mongodb" : "0.9.6-7",
-      "connect-mongodb": ">= 1.1.3",
-      "bcrypt" : "0.4.1",
-      "passport": "0.1.7",
-      "passport-local": "0.1.2",
-      "underscore": ""
-    }
+	"name": "Karaoke-Flow",
+	"version": "0.8.0",
+	"dependencies": {
+    "express": "2.5.6",
+    "ejs": "latest",
+    "mongoose" : "2.5.6",
+    "request" : "latest",
+    "express": "2.5.8",
+    "mongodb" : "0.9.6-7",
+    "connect-mongodb": ">= 1.1.3",
+    "bcrypt" : "0.4.1",
+    "passport": "0.1.7",
+    "passport-local": "0.1.2",
+    "underscore": ""
   }
 
 ## Changes
