@@ -39,25 +39,30 @@ Connect to http://localhost:5000 to get your flow started!  Or see an online dem
 
 package.json:
 
-	"name": "Karaoke-Flow",
-	"version": "0.8.0",
-	"dependencies": {
-    "express": "2.5.6",
-    "ejs": "latest",
-    "mongoose" : "2.5.6",
-    "request" : "latest",
-    "express": "2.5.8",
-    "mongodb" : "0.9.6-7",
-    "connect-mongodb": ">= 1.1.3",
-    "bcrypt" : "0.4.1",
-    "passport": "0.1.7",
-    "passport-local": "0.1.2",
-    "underscore": ""
-  }
+    { "name": "Karaoke-Flow",
+        "version": "0.8.0",
+        "dependencies": {
+            "express": "2.5.6",
+            "ejs": "latest",
+            "mongoose" : "2.5.6",
+            "request" : "latest",
+            "express": "2.5.8",
+            "mongodb" : "0.9.6-7",
+            "connect-mongodb": ">= 1.1.3",
+            "bcrypt" : "0.4.1",
+            "passport": "0.1.7",
+            "passport-local": "0.1.2",
+            "underscore": ""
+        } }
+
+Also thanks to:
+- John Schimmel's [Dynamic Web Dev code](http://github.com/johnschimmel/)
+- Dejan Jacimovic's [countdown JavaScript code](http://stuntsnippets.com/javascript-countdown/)
+- Thomas Fuchs' [Keymaster JavaScript code](https://github.com/madrobby/keymaster)
 
 ## Changes
 
-Last update 01 May 12: Added more helpful comments/docs, updated README.md.
+01 May 12: Added more helpful comments/docs, updated README.md.
 
 ## TODO:
 - fix gap in looped beat tracks (HTML5 bug?)

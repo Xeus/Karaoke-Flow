@@ -1,5 +1,3 @@
-/** routes.js
-  */
 var passport = require('passport');
 
 // Route methods
